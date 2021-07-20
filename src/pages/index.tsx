@@ -4,9 +4,8 @@ import HostRegistrationPage from './HostRegistrationPage';
 import LoginPage from './LoginPage';
 import MainPage from './MainPage';
 import MyInfoPage from './MyInfoPage';
-import RecruitmentDetailPage from './RecruitmentDetailPage';
+import StudyGroupingDetailPage from './StudyGroupingDetailPage';
 import RecruitmentsPage from './RecruitmentsPage';
-import RegisterInterestPage from './RegisterInterestPage';
 import RoomBookingPage from './RoomBookingPage';
 import RoomDetailPage from './RoomDetailPage';
 
@@ -16,9 +15,8 @@ export {
   LoginPage,
   MainPage,
   MyInfoPage,
-  RecruitmentDetailPage,
+  StudyGroupingDetailPage,
   RecruitmentsPage,
-  RegisterInterestPage,
   RoomBookingPage,
   RoomDetailPage,
 };
