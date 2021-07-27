@@ -1,13 +1,16 @@
 import { ThemeProvider } from 'styled-components';
 import { StylesProvider } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import theme from './util/styles/theme';
+
 import { EnterPage, LoginPage } from './pages';
 import TestPage from './pages/_TestPage'; // 추후 제거
 
 const App = () => {
   return (
     <StylesProvider injectFirst>
-      {/* <ThemeProvider theme={null}> */}
+      <ThemeProvider theme={theme}>
       <Router>
         <Switch>
           <Route path={'/'} component={EnterPage} exact />
@@ -21,7 +24,7 @@ const App = () => {
           />
         </Switch>
       </Router>
-      {/* </ThemeProvider> */}
+      </ThemeProvider>
     </StylesProvider>
   );
 };

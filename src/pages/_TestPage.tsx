@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { ResponsiveContainer as Container } from '@/components/Common';
 
 const TestPage = () => {
-  return ['sm', 'md', 'lg', 'xl', 'xxl'].map((v) => (
+  return ['sm', 'md', 'lg', 'xl', 'xxl'].map((v, i) => (
     // @ts-ignore
-    <TestContainer type={v}>
+    <TestContainer type={v} key={i}>
       <div>
         {/* 중앙 */}
         <span>어떤 서비스를 이용하세요?</span>
@@ -26,6 +26,6 @@ export default TestPage;
 
 // --- Styled Components ---
 const TestContainer = styled(Container)`
-  background-color: red;
-  border: 1px solid black;
+  background-color: ${({theme}) => theme.colors.secondary};
+  border: 1px solid ${({theme}) => theme.grayScaleColors.background};
 `;
