@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { TChildren } from "util/types";
+
+import { TChildren, TFont } from "util/types";
 
 interface button {
   width: number;
   height: number;
-  font: string;
+  font: TFont;
   fontSize: number;
-  children: TChildren;
+  children?: TChildren;
 }
 
 const BlueButton = ({ width, height, fontSize, font, children }: button) => {
@@ -26,7 +27,6 @@ const ButtonLayout = styled.button<button>`
   font-size: ${({ fontSize }) => fontSize}px;
   color: ${({ theme }) => theme.grayScaleColors.offWhite};
   background-color: ${({ theme }) => theme.colors.secondary};
-  font-family: "Nunito_Black";
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
 `;
