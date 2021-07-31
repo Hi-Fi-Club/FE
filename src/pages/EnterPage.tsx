@@ -1,11 +1,69 @@
 // 진입 페이지
+import styled from "styled-components";
+import { FiArrowDown } from "react-icons/fi";
 import Header from "components/Header";
+import LoginButton from "components/Common/Buttons/BlueButton";
 
 const EnterPage = () => {
   return (
-    <>
-      <Header></Header>
-    </>
+    <HeroLayout>
+      <Header page={"enter"}></Header>
+      <Contents>
+        <Title>
+          이 세상 <br /> 모든 스터디의 <br /> Hi-Fi 를 위해
+        </Title>
+        <Buttons>
+          <LoginButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
+            Download Mobile App
+          </LoginButton>
+          <LoginButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
+            Go To Service
+          </LoginButton>
+        </Buttons>
+        <Guide>
+          <span>Introduce HiFi, Scroll down</span>
+          <FiArrowDown size={84} />
+        </Guide>
+      </Contents>
+    </HeroLayout>
   );
 };
 export default EnterPage;
+
+const HeroLayout = styled.div`
+  height: 1080px;
+  background-image: url("/hero.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: ${({ theme }) => theme.grayScaleColors.offWhite};
+`;
+
+const Contents = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 200px;
+`;
+
+const Title = styled.div`
+  font-family: "Nunito_Black";
+  font-size: 72px;
+  padding: 3em 0 2em 0;
+  line-height: normal;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Guide = styled.div`
+  height: 150px;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: center;
+  align-items: center;
+  margin-top: 150px;
+`;
