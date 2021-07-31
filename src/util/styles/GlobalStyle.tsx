@@ -14,7 +14,31 @@ import reset from "styled-reset";
 // --- Styled Components ---
 const GlobalStyle = createGlobalStyle`
   ${reset};
-
+  
+	* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family:'Nunito_Regular';
+    font-size: 18px;
+    line-height: 21px;
+    color: #212529;
+  }
+  a, a:active, a:hover, a:visited{
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  ul, ol {
+    list-style: none;
+  }
+  input, button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
 
   @font-face {
     font-family: 'Nunito_Black';	
@@ -56,31 +80,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Nunito_ExtraLight';	
     src: local('Nunito_ExtraLight'),    
     url(${Nunito_ExtraLight})format('woff');
-  }
-  
-	* {
-    box-sizing: border-box;
-    font-family:'Nunito_Regular';
-  }
-  
-  body {
-    font-size: 18px;
-    line-height: 21px;
-    color: #212529;
-  }
-  a, a:active, a:hover, a:visited{
-    color: inherit;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  ul, ol {
-    list-style: none;
-  }
-  input, button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
   }
 `;
 
