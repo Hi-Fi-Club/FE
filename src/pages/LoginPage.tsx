@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Header from "components/Header";
+import { ReactComponent as Line } from "./../images/Line_2.svg";
 
 // - 헤더
 const LoginPage = () => {
@@ -9,7 +10,9 @@ const LoginPage = () => {
       <ContentsWrapper>
         <Logo />
 
-        <span>Login with Service Account</span>
+        <span>
+          <Line /> Login with Service Account <Line />
+        </span>
 
         <LoginKakao />
       </ContentsWrapper>
@@ -24,6 +27,11 @@ const ContentsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 200px;
+
+  span {
+    font-size: 20px;
+    font-family: "Nunito_Bold";
+  }
 `;
 
 const LoginPageLayout = styled.div``;
