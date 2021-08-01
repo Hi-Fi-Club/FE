@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import {
   Nunito_Black,
   Nunito_ExtraBold,
+  Nunito_ExtraBoldItalic,
   Nunito_Bold,
   Nunito_SemiBold,
   Nunito_Regular,
@@ -80,6 +81,12 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Nunito_ExtraLight';	
     src: local('Nunito_ExtraLight'),    
     url(${Nunito_ExtraLight})format('woff');
+  }
+
+  @font-face {
+    font-family: 'Nunito_ExtraBoldItalic';	
+    src: local('Nunito_ExtraBoldItalic'),    
+    url(${Nunito_ExtraBoldItalic})format('woff');
   }
 `;
 

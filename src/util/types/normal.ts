@@ -10,6 +10,7 @@ type TChildren =
 type TFont =
   | "Nunito_Black"
   | "Nunito_ExtraBold"
+  | "Nunito_ExtraBoldItalic"
   | "Nunito_Bold"
   | "Nunito_SemiBold"
   | "Nunito_Regular"

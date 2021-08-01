@@ -10,7 +10,11 @@ const EnterPage = () => {
       <Header page={"enter"}></Header>
       <Contents>
         <Title>
-          이 세상 <br /> 모든 스터디의 <br /> Hi-Fi 를 위해
+          이 세상 <br /> 모든 스터디의 <br />{" "}
+          <span className="brand">
+            Hi<span className="white">-</span>Fi
+          </span>{" "}
+          를 위해
         </Title>
         <Buttons>
           <LoginButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
@@ -50,6 +54,14 @@ const Title = styled.div`
   font-size: 72px;
   padding: 3em 0 2em 0;
   line-height: normal;
+  .brand {
+    font-family: "Nunito_ExtraBoldItalic";
+    color: ${({ theme }) => theme.colors.secondary};
+  }
+
+  .white {
+    color: ${({ theme }) => theme.grayScaleColors.offWhite};
+  }
 `;
 
 const Buttons = styled.div`
