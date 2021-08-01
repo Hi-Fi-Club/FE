@@ -18,9 +18,9 @@ const App = () => {
             <Route path={"/"} component={EnterPage} exact />
             <Route path={"/login"} component={LoginPage} exact />
             <Route path={"/main"} component={MainPage} exact />
-            {/* <Route path ={'/user/mypage'} component={MyPage} exact /> */}
-            {/* <Route path ={'/user/interest'} component={InterestPage} exact /> */}
-            {/* <Route path ={'/user/location'} component={LocationPage} exact /> */}
+            {/* <Route path ={'/mypage'} component={MyPage} exact /> */}
+            {/* <Route path ={'/interest'} component={InterestPage} exact /> */}
+            {/* <Route path ={'/location'} component={LocationPage} exact /> */}
             {/* <Route path ={'/recruitments/pages/:page'} component={RecruitmentsPage} exact /> */}
             {/* <Route path ={'/recruitments/:id'} component={RecruitmentDetailPage} exact /> */}
             {/* <Route path ={'/recruitments/new'} component={newRecruitmentPage} exact /> */}

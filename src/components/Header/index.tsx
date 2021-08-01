@@ -12,14 +12,18 @@ interface Props {
 const Header = ({ page }: Props) => {
   const [headerState, setHeaderState] = useState(true);
 
-  window.addEventListener("scroll", () => {
-    window.scrollY === 0 && page === "enter" ? setHeaderState(true) : setHeaderState(false);
-  });
+  if (page === "enter") {
+    window.addEventListener("scroll", () => {
+      window.scrollY === 0 && page === "enter" ? setHeaderState(true) : setHeaderState(false);
+    });
+  }
 
   return (
     <HeaderLayout headerState={headerState}>
       <HeaderContentsWrapper>
-        <Logo />
+        <Link to="/">
+          <Logo></Logo>
+        </Link>
         <ButtonContainer>
           <Link to="/login">
             <LoginButton width={79} height={32} font={"Nunito_Black"} fontSize={18}>
@@ -52,9 +56,10 @@ const HeaderContentsWrapper = styled.div`
 `;
 
 const Logo = styled.div`
-  height: 60%;
   width: 140px;
+  height: 200px;
   background-image: url("/logoType_1.png");
+  background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
 `;
