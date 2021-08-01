@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import LoginButton from "components/Common/Buttons/BlueButton";
 import { TPage } from "util/types";
+import { Link } from "react-router-dom";
 
 interface Props {
   children?: HTMLDivElement;
@@ -20,9 +21,11 @@ const Header = ({ page }: Props) => {
       <HeaderContentsWrapper>
         <Logo />
         <ButtonContainer>
-          <LoginButton width={79} height={32} font={"Nunito_Black"} fontSize={18}>
-            Sign In
-          </LoginButton>
+          <Link to="/login">
+            <LoginButton width={79} height={32} font={"Nunito_Black"} fontSize={18}>
+              Sign In
+            </LoginButton>
+          </Link>
         </ButtonContainer>
       </HeaderContentsWrapper>
     </HeaderLayout>

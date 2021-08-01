@@ -2,12 +2,13 @@
 import styled from "styled-components";
 import { FiArrowDown } from "react-icons/fi";
 import Header from "components/Header";
-import LoginButton from "components/Common/Buttons/BlueButton";
+import LinkButton from "components/Common/Buttons/BlueButton";
+import { Link } from "react-router-dom";
 
 const EnterPage = () => {
   return (
     <HeroLayout>
-      <Header page={"enter"}></Header>
+      <Header page={"enter"} />
       <Contents>
         <Title>
           이 세상 <br /> 모든 스터디의 <br />{" "}
@@ -17,12 +18,14 @@ const EnterPage = () => {
           를 위해
         </Title>
         <Buttons>
-          <LoginButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
+          <LinkButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
             Download Mobile App
-          </LoginButton>
-          <LoginButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
-            Go To Service
-          </LoginButton>
+          </LinkButton>
+          <Link to="/login">
+            <LinkButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
+              Go To Service
+            </LinkButton>
+          </Link>
         </Buttons>
         <Guide>
           <span>Introduce HiFi, Scroll down</span>

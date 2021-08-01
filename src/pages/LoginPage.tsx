@@ -1,17 +1,16 @@
-// 로그인 페이지
+import Header from "components/Header";
+
 // - 헤더
 const LoginPage = () => {
   return (
-    <div>
-      {/* 중앙 */}
-      <div>LOGO</div>
+    <>
+      <Header page="login" />
       <div>
-        <button>Google 계정으로 로그인</button>
-        <button>카카오 계정으로 로그인</button>
-        <button>네이버 계정으로 로그인</button>
+        <div>이미지</div>
+        <div>서비스 계정으로 로그인</div>
+        <div>kakao</div>
       </div>
-
-    </div>
+    </>
   );
 };
 export default LoginPage;
