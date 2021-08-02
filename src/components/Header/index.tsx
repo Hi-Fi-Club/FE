@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LoginButton from "components/Common/Buttons/BlueButton";
 import { TPage } from "util/types";
@@ -17,20 +17,23 @@ const Header = ({ page }: Props) => {
       window.scrollY === 0 && page === "enter" ? setHeaderState(true) : setHeaderState(false);
     });
   }
-
   return (
     <HeaderLayout headerState={headerState}>
       <HeaderContentsWrapper>
         <Link to="/">
           <Logo></Logo>
         </Link>
-        <ButtonContainer>
-          <Link to="/login">
-            <LoginButton width={79} height={32} font={"Nunito_Black"} fontSize={18}>
-              Sign In
-            </LoginButton>
-          </Link>
-        </ButtonContainer>
+        {page === "login" ? (
+          <></>
+        ) : (
+          <ButtonContainer>
+            <Link to="/login">
+              <LoginButton width={79} height={32} font={"Nunito_Black"} fontSize={18}>
+                Sign In
+              </LoginButton>
+            </Link>
+          </ButtonContainer>
+        )}
       </HeaderContentsWrapper>
     </HeaderLayout>
   );
@@ -45,6 +48,7 @@ const HeaderLayout = styled.div<{ headerState: Boolean }>`
   box-shadow: ${({ headerState }) => (headerState ? "none" : "0.3em 0.3em 1em rgba(0, 0, 0, 0.3)")};
   background-color: ${({ headerState }) => (headerState ? "transparent" : "#ffffff")};
   transition: background-color 0.4s;
+  z-index: 1;
 `;
 
 const HeaderContentsWrapper = styled.div`
@@ -57,7 +61,7 @@ const HeaderContentsWrapper = styled.div`
 
 const Logo = styled.div`
   width: 140px;
-  height: 200px;
+  height: 100px;
   background-image: url("/logoType_1.png");
   background-position: center;
   background-repeat: no-repeat;
