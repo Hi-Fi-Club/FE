@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import LoginButton from "components/Common/Buttons/BlueButton";
+import BlueButton from "components/Common/Buttons/BlueButton";
 import { TPage } from "util/types";
 import { Link } from "react-router-dom";
 
@@ -28,9 +28,7 @@ const Header = ({ page }: Props) => {
         ) : (
           <ButtonContainer>
             <Link to="/login">
-              <LoginButton width={79} height={32} font={"Nunito_Black"} fontSize={18}>
-                Sign In
-              </LoginButton>
+              <LoginButton>Sign In</LoginButton>
             </Link>
           </ButtonContainer>
         )}
@@ -66,6 +64,13 @@ const Logo = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+`;
+
+const LoginButton = styled(BlueButton)`
+  width: 79px;
+  height: 32px;
+  font-family: "Nunito_Black";
+  font-size: 18px;
 `;
 
 const ButtonContainer = styled.div``;

@@ -1,9 +1,9 @@
 // 진입 페이지
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { FiArrowDown } from "react-icons/fi";
 import Header from "components/Header";
-import LinkButton from "components/Common/Buttons/BlueButton";
-import { Link } from "react-router-dom";
+import BlueButton from "components/Common/Buttons/BlueButton";
 
 const EnterPage = () => {
   return (
@@ -18,13 +18,9 @@ const EnterPage = () => {
           를 위해
         </Title>
         <Buttons>
-          <LinkButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
-            Download Mobile App
-          </LinkButton>
+          <LinkButton>Download Mobile App</LinkButton>
           <Link to="/login">
-            <LinkButton width={400} height={100} font={"Nunito_Bold"} fontSize={30}>
-              Go To Service
-            </LinkButton>
+            <LinkButton>Go To Service</LinkButton>
           </Link>
         </Buttons>
         <Guide>
@@ -70,6 +66,13 @@ const Title = styled.div`
 const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const LinkButton = styled(BlueButton)`
+  width: 400px;
+  height: 100px;
+  font-family: "Nunito_Bold";
+  font-size: 30px;
 `;
 
 const Guide = styled.div`
