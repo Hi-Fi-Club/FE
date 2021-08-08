@@ -27,4 +27,5 @@ export default RoundButton;
 const RoundButtonLayout = styled(Button)<IRoundButton>`
   padding: 5px 20px;
   border-radius: 24px;
+  text-transform: none;
 `;
