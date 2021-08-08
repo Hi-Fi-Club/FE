@@ -1,18 +1,21 @@
 import { TChildren } from "@/util/types";
+import { Button, PropTypes } from "@material-ui/core";
 import styled from "styled-components";
 
 interface IRoundButton {
-  backgroundColor?: string;
-  borderColor?: string;
-  color?: string;
+  variant?: "text" | "outlined" | "contained";
+  color?: PropTypes.Color,
+  disableRipple?: boolean;
+  onClick?: (e: React.MouseEvent | MouseEvent) => void;
   children?: TChildren;
 }
 
-const RoundButton = ({ backgroundColor, borderColor, color, children, ...props }: IRoundButton) => (
+const RoundButton = ({ variant, color, disableRipple, onClick, children, ...props }: IRoundButton) => (
   <RoundButtonLayout
-    backgroundColor={backgroundColor || "#000"}
-    borderColor={borderColor || "#000"}
-    color={color || "#FFF"}
+    variant={variant || "contained"}
+    color={color || "default"}
+    disableRipple={disableRipple}
+    onClick={onClick}
     {...props}
   >
     {children || {}}
@@ -21,10 +24,7 @@ const RoundButton = ({ backgroundColor, borderColor, color, children, ...props }
 
 export default RoundButton;
 
-const RoundButtonLayout = styled.button<IRoundButton>`
+const RoundButtonLayout = styled(Button)<IRoundButton>`
   padding: 5px 20px;
   border-radius: 24px;
-  background-color: ${({ backgroundColor }) => `${backgroundColor}`};
-  border: ${({ borderColor }) => `1px solid ${borderColor}`};
-  color: ${({ color }) => `${color}`};
 `;
