@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import RoundButton from "../Common/Buttons/RoundButton";
 import { intersetData } from "util/mockData";
@@ -67,22 +68,21 @@ const RegisterInterest = () => {
     <RegisterInterestLayout>
       <InterestRow>
         <InterestBox>
-          <NoticeSpan>ㅇㅇ님의 관심분야를 선택해주세요</NoticeSpan>
+          <span>ㅇㅇ님의 관심분야를 선택해주세요</span>
           {mainCategoryBtns.length > 0 && <ButtonBox>{mainCategoryBtns}</ButtonBox>}
+          {selectedBtnInfo.mainIdx > -1 && subCategoryBtns && subCategoryBtns.length > 0 && (
+            <>
+              <SeparatedLine />
+              <ButtonBox>{subCategoryBtns}</ButtonBox>
+            </>
+          )}
         </InterestBox>
-
-        {selectedBtnInfo.mainIdx > -1 && subCategoryBtns && subCategoryBtns.length > 0 && (
-          <InterestBox>
-            <SeparatedLine />
-            <ButtonBox>{subCategoryBtns}</ButtonBox>
-          </InterestBox>
-        )}
       </InterestRow>
 
       {selectedBtnInfo.subIdxs.length > 0 && (
         <InterestResultRow>
-          <SeparatedLine />
-          <InterestResultBox>
+          <InterestBox>
+            <SeparatedLine />
             <ButtonBox>
               {/* 추후 기능 생성 */}
               <SelectedItemButton disableRipple={true}>React</SelectedItemButton>
@@ -91,8 +91,11 @@ const RegisterInterest = () => {
               <SelectedItemButton disableRipple={true}>Flutter</SelectedItemButton>
               <SelectedItemButton disableRipple={true}>영어</SelectedItemButton>
             </ButtonBox>
-            <NextButton variant="outlined">다음 (1/2)</NextButton>
-          </InterestResultBox>
+
+            <Link to="/location">
+              <NextButton variant="outlined">다음 (1/2)</NextButton>
+            </Link>
+          </InterestBox>
         </InterestResultRow>
       )}
     </RegisterInterestLayout>
@@ -105,14 +108,15 @@ const RegisterInterestLayout = styled(Container)`
   padding-top: 64px;
   position: relative;
   height: calc(90vh - 64px);
+
   display: grid;
-  grid-template-rows: 40% 40%;
+  grid-template-rows: 40%;
 `;
 
 const InterestRow = styled.div`
   position: relative;
   height: fit-content;
-  top: 30%;
+  top: 25%;
 `;
 
 const InterestResultRow = styled(InterestRow)`
@@ -125,12 +129,8 @@ const InterestBox = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  row-gap: 4px;
 `;
-
-const InterestResultBox = styled(InterestBox)`
-  flex-direction: row;
-`;
-
 // ---
 
 const ButtonBox = styled.div`
@@ -139,10 +139,6 @@ const ButtonBox = styled.div`
   align-items: center;
   justify-content: center;
   gap: 4px;
-`;
-
-const NoticeSpan = styled.div`
-  margin-bottom: 8px;
 `;
 
 const InterestButton = styled(RoundButton)<IInterestButton>`
@@ -160,19 +156,19 @@ const InterestButton = styled(RoundButton)<IInterestButton>`
 const SelectedItemButton = styled(RoundButton)`
   background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
   color: ${({ theme }) => theme.grayScaleColors.offWhite};
-  &:hover{
+  &:hover {
     background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
   }
 `;
 
 const NextButton = styled(RoundButton)`
   border-radius: 12px;
-  margin: 0 8px;
+  margin: 8px 0;
 `;
 
 const SeparatedLine = styled.div`
   width: 100%;
   height: 1px;
-  margin: 8px 0;
+  margin: 4px 0;
   box-shadow: 0 0.4px 0.4px ${({ theme }) => theme.grayScaleColors.placeHolder};
 `;
