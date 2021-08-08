@@ -8,6 +8,8 @@ import StudyGroupingDetailPage from './StudyGroupingDetailPage';
 import RecruitmentsPage from './RecruitmentsPage';
 import RoomBookingPage from './RoomBookingPage';
 import RoomDetailPage from './RoomDetailPage';
+import InterestPage from './InterestPage';
+import LocationPage from './LocationPage';
 
 export {
   EnterPage,
@@ -19,5 +21,7 @@ export {
   RecruitmentsPage,
   RoomBookingPage,
   RoomDetailPage,
+  InterestPage,
+  LocationPage,
 };
 
