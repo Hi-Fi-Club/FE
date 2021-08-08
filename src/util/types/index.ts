@@ -1,3 +1,3 @@
-import { TChildren } from './normal';
+import { TChildren, TFont, TPage } from "./normal";
 
-export type { TChildren };
+export type { TChildren, TFont, TPage };
