@@ -13,11 +13,11 @@ import {
 export type TContainerType = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 interface IResponsiveContainer {
   type?: TContainerType;
-  children: TChildren;
+  children?: TChildren;
 }
 
 const ResponsiveContainer = ({ type, children, ...props }: IResponsiveContainer) => (
-  <ResponsiveContainerLayout type={type} {...props}>{children}</ResponsiveContainerLayout>
+  <ResponsiveContainerLayout type={type || "sm"} {...props}>{children || {}}</ResponsiveContainerLayout>
 );
 
 export default ResponsiveContainer;

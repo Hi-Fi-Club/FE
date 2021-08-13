@@ -17,6 +17,6 @@ type TFont =
   | "Nunito_Light"
   | "Nunito_ExtraLight";
 
-type TPage = "enter" | "login";
+type TPage = "enter" | "login" | "interest" | "location";
 
 export type { TChildren, TFont, TPage };
