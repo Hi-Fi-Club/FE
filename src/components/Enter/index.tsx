@@ -1,0 +1,64 @@
+// 진입 페이지
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { FiArrowDown } from "react-icons/fi";
+import { ROUTE } from '../../util/constants';
+import { RoundButton } from '../Common';
+import EnterTitle from './EnterTitle';
+
+const EnterPage = () => {
+  return (
+    <HeroLayout>
+        <EnterTitle/>
+        <Buttons>
+          <LinkButton>Download Mobile App</LinkButton>
+          <Link to={ROUTE.LOGIN}>
+            <LinkButton>Go To Service</LinkButton>
+          </Link>
+        </Buttons>
+        <Guide>
+          <span>Introduce HiFi, Scroll down</span>
+          <FiArrowDown size={84} />
+        </Guide>
+    </HeroLayout>
+  );
+};
+export default EnterPage;
+
+const HeroLayout = styled.div`
+  padding: 0 200px;
+  height:1080px;
+  background-image: url("/hero.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: ${({ theme }) => theme.grayScaleColors.offWhite};
+`;
+
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const LinkButton = styled(RoundButton)`
+  width: 400px;
+  height: 100px;
+  background-color: ${({ theme }) => theme.colors.basicBlue};
+  color: ${({ theme }) => theme.grayScaleColors.offWhite};
+  font-family: "Nunito_Bold";
+  font-size: 30px;
+  &:hover {
+    background-color: #79c6f6;
+  }
+`;
+
+const Guide = styled.div`
+  height: 150px;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: center;
+  align-items: center;
+  margin-top: 150px;
+`;

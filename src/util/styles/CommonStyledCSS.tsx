@@ -16,12 +16,12 @@ export const cssDefault = css`
   border: none;
 `;
 
-const flexSet = (horizon: string, vertical: string, direction: string) => css`
-  display: flex;
-  justify-content: ${horizon || "center"};
-  align-items: ${vertical || "center"};
-  flex-direction: ${direction || "row"};
-`;
+// const flexSet = (horizon: string, vertical: string, direction: string) => css`
+//   display: flex;
+//   justify-content: ${horizon || "center"};
+//   align-items: ${vertical || "center"};
+//   flex-direction: ${direction || "row"};
+// `;
 
-const Mixin = { flexSet };
-export default Mixin;
+// const Mixin = { flexSet };
+// export default Mixin;

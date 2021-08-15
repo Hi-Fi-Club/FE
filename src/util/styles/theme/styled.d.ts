@@ -10,7 +10,7 @@ declare module 'styled-components' {
     | 'basicBlue' | 'lightBlue' | 'darkBlue'
     | 'basicGreen' | 'lightGreen' | 'darkGreen'
     | 'error' | 'lightRed' | 'darkRed';
-  type TOptions = 
+  type TOptions =
     | "horizon" | "vertical" | "direction"
 
   export interface DefaultTheme {
