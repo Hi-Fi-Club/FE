@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import { FiSearch } from "react-icons/fi";
-import RoundButton from "../Common/Buttons/RoundButton";
+import RoundButton from "components/Common/Buttons/RoundButton";
 
 const RegisterLocation = () => {
   return (

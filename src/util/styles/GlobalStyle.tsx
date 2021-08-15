@@ -8,11 +8,10 @@ import {
   Nunito_Regular,
   Nunito_Light,
   Nunito_ExtraLight,
-} from "./../../fonts/font.js";
+} from "assets/fonts";
 
 import reset from "styled-reset";
 
-// --- Styled Components ---
 const GlobalStyle = createGlobalStyle`
   ${reset};
   

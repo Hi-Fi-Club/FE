@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
-import RoundButton from "../Common/Buttons/RoundButton";
+import RoundButton from "components/Common/Buttons/RoundButton";
 import { intersetData } from "util/mockData";
 
 type TCategoryType = "main" | "sub";
@@ -15,50 +15,52 @@ interface ISelectedBtnInfo {
   subIdxs: number[];
 }
 
+const INIT_INDEX = -1;
+
 const RegisterInterest = () => {
   const [selectedBtnInfo, setSelectedBtnInfo] = useState<ISelectedBtnInfo>({
-    mainIdx: -1,
+    mainIdx: INIT_INDEX,
     subIdxs: [],
   });
 
-  const handleInterestBtnClick = (e: React.MouseEvent | MouseEvent, idx: number, category: TCategoryType) => {
+  const handleInterestMainBtnClick = (e: React.MouseEvent | MouseEvent, idx: number) => 
     setSelectedBtnInfo((state) => {
-      const mainIdx = category === "main" ? (idx === state.mainIdx ? -1 : idx) : state.mainIdx;
-      const subIdxs =
-        category === "sub"
-          ? state.subIdxs.includes(idx)
-            ? state.subIdxs.filter((subIdx: number) => subIdx !== idx)
-            : state.subIdxs.concat(idx)
-          : state.subIdxs;
-
-      const isClearSubIdxs = state.mainIdx === -1 || (category === "main" && state.mainIdx !== idx);
-
+      const { mainIdx }  = state;
       return {
         ...state,
-        mainIdx,
-        subIdxs: isClearSubIdxs ? [] : subIdxs,
-      };
+        mainIdx: (idx === mainIdx ? INIT_INDEX : idx),
+      }
     });
-  };
+ 
+  const handleInterestSubBtnClick = (e: React.MouseEvent | MouseEvent, idx: number) => {
+    setSelectedBtnInfo((state) => {
+      const { subIdxs } = state;
+      const newSubIdxs = subIdxs.includes(idx) ? subIdxs.filter((subIdx:number) => subIdx !== idx) : subIdxs.concat(idx);
+      return {
+        ...state,
+        subIdxs: newSubIdxs,
+      }
+    });
+  }
 
-  const mainCategoryBtns = intersetData.map(({ value }, idx) => (
+  const mainCategoryBtns = intersetData.map(({ value, id }) => (
     <InterestButton
-      key={idx}
-      selected={selectedBtnInfo.mainIdx === idx}
-      onClick={(e) => handleInterestBtnClick(e, idx, "main")}
+      key={id}
+      selected={selectedBtnInfo.mainIdx === id}
+      onClick={(e) => handleInterestMainBtnClick(e, id)}
     >
       {value}
     </InterestButton>
   ));
 
   const subCategoryBtns = intersetData
-    .find((_, i) => i === selectedBtnInfo.mainIdx)
-    ?.subCategories.map(({ value }, idx) => (
+    .find(({ id: mainId }) => mainId === selectedBtnInfo.mainIdx)
+    ?.subCategories.map(({ value, id }) => (
       <InterestButton
-        key={idx}
+        key={id}
         variant="outlined"
-        color={selectedBtnInfo.subIdxs.includes(idx) ? "primary" : "default"}
-        onClick={(e) => handleInterestBtnClick(e, idx, "sub")}
+        color={selectedBtnInfo.subIdxs.includes(id) ? "primary" : "default"}
+        onClick={(e) => handleInterestSubBtnClick(e, id)}
       >
         {value}
       </InterestButton>
@@ -70,7 +72,7 @@ const RegisterInterest = () => {
         <InterestBox>
           <span>ㅇㅇ님의 관심분야를 선택해주세요</span>
           {mainCategoryBtns.length > 0 && <ButtonBox>{mainCategoryBtns}</ButtonBox>}
-          {selectedBtnInfo.mainIdx > -1 && subCategoryBtns && subCategoryBtns.length > 0 && (
+          {selectedBtnInfo.mainIdx > INIT_INDEX && subCategoryBtns && (
             <>
               <SeparatedLine />
               <ButtonBox>{subCategoryBtns}</ButtonBox>
@@ -84,12 +86,8 @@ const RegisterInterest = () => {
           <InterestBox>
             <SeparatedLine />
             <ButtonBox>
-              {/* 추후 기능 생성 */}
-              <SelectedItemButton disableRipple={true}>React</SelectedItemButton>
-              <SelectedItemButton disableRipple={true}>Java</SelectedItemButton>
-              <SelectedItemButton disableRipple={true}>프랑스어</SelectedItemButton>
-              <SelectedItemButton disableRipple={true}>Flutter</SelectedItemButton>
-              <SelectedItemButton disableRipple={true}>영어</SelectedItemButton>
+              {/* state.mainIdx에 선택된 mockData -> mainId의 subCategories에서 state.subIdxs에 들어있는 subId를 가져와서 렌더링 (find)  */}
+              {selectedBtnInfo.subIdxs.map((el, idx)=><SelectedItemButton key={el} disableRipple={true}>{el}</SelectedItemButton>)}
             </ButtonBox>
 
             <Link to="/location">

@@ -2,11 +2,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FiArrowDown } from "react-icons/fi";
-import { ROUTE } from '../../util/constants';
-import { RoundButton } from '../Common';
+import { ROUTE } from 'util/constants';
+import { RoundButton } from 'components/Common';
 import EnterTitle from './EnterTitle';
 
-const EnterPage = () => {
+const Enter = () => {
+
   return (
     <HeroLayout>
         <EnterTitle/>
@@ -23,7 +24,7 @@ const EnterPage = () => {
     </HeroLayout>
   );
 };
-export default EnterPage;
+export default Enter;
 
 const HeroLayout = styled.div`
   padding: 0 200px;
