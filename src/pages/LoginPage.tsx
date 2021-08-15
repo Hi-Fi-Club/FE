@@ -1,12 +1,10 @@
 import styled from "styled-components";
-import Header from "components/Header";
 import { ReactComponent as Line } from "./../images/Line_2.svg";
 
 // - 헤더
 const LoginPage = () => {
   return (
     <LoginPageLayout>
-      <Header page="login" />
       <ContentsWrapper>
         <Logo />
 

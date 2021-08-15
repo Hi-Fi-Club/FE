@@ -1,60 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import BlueButton from "components/Common/Buttons/BlueButton";
-import { TPage } from "util/types";
 import { Link } from "react-router-dom";
+import RoundButton from "components/Common/Buttons/RoundButton";
+import {ROUTE} from 'util/constants'
 
-interface Props {
-  children?: HTMLDivElement;
-  page: TPage;
-}
+const Header = () => {
+  const {ENTER, LOGIN} = ROUTE
+  const { location: { pathname } } = window;
+  const [isHeaderTop, setHeaderTop] = useState(true);
 
-const Header = ({ page }: Props) => {
-  const [headerState, setHeaderState] = useState(true);
+  // 나중에 디바운서 or 쓰로틀링
+  const handleScroll = () => setHeaderTop(window.scrollY === 0);
 
-  if (page === "enter") {
-    window.addEventListener("scroll", () => {
-      window.scrollY === 0 && page === "enter" ? setHeaderState(true) : setHeaderState(false);
-    });
-  }
+  useEffect(() => {
+    if (pathname !== ENTER) return;
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  
   return (
-    <HeaderLayout headerState={headerState}>
-      <HeaderContentsWrapper>
-        <Link to="/">
-          <Logo></Logo>
+    <HeaderLayout isHeaderTop={isHeaderTop}>
+        <Link to={ENTER}>
+          <Logo/>
         </Link>
-        {page === "login" ? (
-          <></>
-        ) : (
+        {pathname !== LOGIN && (
           <ButtonContainer>
-            <Link to="/login">
+            <Link to={LOGIN}>
               <LoginButton>Sign In</LoginButton>
             </Link>
           </ButtonContainer>
         )}
-      </HeaderContentsWrapper>
     </HeaderLayout>
   );
 };
 
 export default Header;
 
-const HeaderLayout = styled.div<{ headerState: Boolean }>`
+const HeaderLayout = styled.div<{ isHeaderTop: Boolean }>`
+  ${({ theme }) => theme.flexSet('space-between')};
   width: 100%;
   height: 64px;
+  padding: 0 200px;
   position: fixed;
-  box-shadow: ${({ headerState }) => (headerState ? "none" : "0.3em 0.3em 1em rgba(0, 0, 0, 0.3)")};
-  background-color: ${({ headerState }) => (headerState ? "transparent" : "#ffffff")};
+  box-shadow: ${({ isHeaderTop }) => (isHeaderTop ? "none" : "0.3em 0.3em 1em rgba(0, 0, 0, 0.3)")};
+  background-color: ${({ isHeaderTop,theme }) => (isHeaderTop ? "transparent" : `${theme.grayScaleColors.offWhite}`)};
   transition: background-color 0.4s;
   z-index: 1;
-`;
-
-const HeaderContentsWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  margin: 0 200px;
 `;
 
 const Logo = styled.div`
@@ -66,11 +58,14 @@ const Logo = styled.div`
   background-size: contain;
 `;
 
-const LoginButton = styled(BlueButton)`
-  width: 79px;
-  height: 32px;
+const LoginButton = styled(RoundButton)`
+  background-color: ${({ theme }) => theme.colors.basicBlue};
+  color: ${({ theme }) => theme.grayScaleColors.offWhite};
   font-family: "Nunito_Black";
   font-size: 18px;
+  &:hover {
+    background-color:${({ theme }) => theme.colors.lightBlue};
+  }
 `;
 
 const ButtonContainer = styled.div``;

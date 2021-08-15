@@ -24,8 +24,7 @@ const TestPage = () => {
 };
 export default TestPage;
 
-// --- Styled Components ---
 const TestContainer = styled(Container)`
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.basicBlue};
   border: 1px solid ${({ theme }) => theme.grayScaleColors.background};
 `;

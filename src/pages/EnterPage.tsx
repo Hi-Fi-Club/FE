@@ -2,13 +2,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FiArrowDown } from "react-icons/fi";
-import Header from "components/Header";
 import BlueButton from "components/Common/Buttons/BlueButton";
+import RoundButton from "@/components/Common/Buttons/RoundButton";
 
 const EnterPage = () => {
   return (
     <HeroLayout>
-      <Header page={"enter"} />
       <Contents>
         <Title>
           이 세상 <br /> 모든 스터디의 <br />{" "}
@@ -55,7 +54,7 @@ const Title = styled.div`
   line-height: normal;
   .brand {
     font-family: "Nunito_ExtraBoldItalic";
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.basicBlue};
   }
 
   .white {
@@ -68,11 +67,16 @@ const Buttons = styled.div`
   justify-content: space-between;
 `;
 
-const LinkButton = styled(BlueButton)`
+const LinkButton = styled(RoundButton)`
   width: 400px;
   height: 100px;
+  background-color: ${({ theme }) => theme.colors.basicBlue};
+  color: ${({ theme }) => theme.grayScaleColors.offWhite};
   font-family: "Nunito_Bold";
   font-size: 30px;
+  &:hover {
+    background-color: #79c6f6;
+  }
 `;
 
 const Guide = styled.div`

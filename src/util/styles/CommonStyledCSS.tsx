@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css } from "styled-components";
 
 export const cssImageAuto = css`
   img {
@@ -15,3 +15,13 @@ export const cssDefault = css`
   outline: none;
   border: none;
 `;
+
+const flexSet = (horizon: string, vertical: string, direction: string) => css`
+  display: flex;
+  justify-content: ${horizon || "center"};
+  align-items: ${vertical || "center"};
+  flex-direction: ${direction || "row"};
+`;
+
+const Mixin = { flexSet };
+export default Mixin;

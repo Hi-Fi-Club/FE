@@ -6,7 +6,7 @@ import GlobalStyle from "./util/styles/GlobalStyle";
 import theme from "./util/styles/theme";
 
 import { EnterPage, LoginPage, MainPage, InterestPage, LocationPage } from "./pages";
-import TestPage from "./pages/_TestPage"; // 추후 제거
+import Header from "./components/Header";
 
 const App = () => {
   return (
@@ -14,6 +14,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Router>
+          <Header/>
           <Switch>
             <Route path={"/"} component={EnterPage} exact />
             <Route path={"/login"} component={LoginPage} exact />
@@ -28,13 +29,7 @@ const App = () => {
             {/* <Route path ={'/rooms/:id'} component={roomDetailPage} exact /> */}
             {/* <Route path ={'/uploadroom'} component={uploadRoomPage} exact /> */}
             {/* <Route path ={'/admin'} component={adminPage} exact /> */}
-            <Route
-              // 반응형 테스트용
-              path={"/test"}
-              //@ts-ignore
-              component={TestPage}
-              exact
-            />
+           
           </Switch>
         </Router>
       </ThemeProvider>

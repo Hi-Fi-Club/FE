@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
   
 	* {
     box-sizing: border-box;
+    
   }
   
   body {
@@ -26,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 21px;
     color: #212529;
   }
+
   a, a:active, a:hover, a:visited{
     color: inherit;
     text-decoration: none;
