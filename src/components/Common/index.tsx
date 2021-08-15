@@ -1,3 +1,4 @@
-import ResponsiveContainer from './ResponsiveContainer';
+import ResponsiveContainer from "./ResponsiveContainer";
+import { RoundButton } from "./Buttons";
 
-export { ResponsiveContainer };
+export { ResponsiveContainer, RoundButton };

@@ -1,4 +1,5 @@
 import 'styled-components';
+import Mixin from "../CommonStyledCSS";
 
 declare module 'styled-components' {
   type TGrayScaleColors =
@@ -6,9 +7,11 @@ declare module 'styled-components' {
     | 'placeHolder' | 'line' | 'inputBackground'
     | 'background' | 'offWhite';
   type TColors =
-    | 'secondary' | 'lightBlue' | 'darkBlue'
-    | 'success' | 'lightGreen' | 'darkGreen'
+    | 'basicBlue' | 'lightBlue' | 'darkBlue'
+    | 'basicGreen' | 'lightGreen' | 'darkGreen'
     | 'error' | 'lightRed' | 'darkRed';
+  type TOptions =
+    | "horizon" | "vertical" | "direction"
 
   export interface DefaultTheme {
     grayScaleColors: {
@@ -17,5 +20,6 @@ declare module 'styled-components' {
     colors: {
       [color in TColors]: string;
     };
+    flexSet: (horizon?: string, vertical?: string, direction?: string) => any,
   }
 }

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import { FiSearch } from "react-icons/fi";
-import RoundButton from "../Common/Buttons/RoundButton";
+import RoundButton from "components/Common/Buttons/RoundButton";
 
 const RegisterLocation = () => {
   return (
@@ -74,16 +74,13 @@ const LocationBox = styled.div`
 const LocationHelpBox = styled(LocationBox)`
   justify-content: center;
   align-items: flex-start;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.basicBlue};
   font-size: 16px;
 
   li {
     font-size: 14px;
   }
 `;
-
-// --
-
 const NoticeParagraph = styled.p`
   padding: 8px 0;
 `;

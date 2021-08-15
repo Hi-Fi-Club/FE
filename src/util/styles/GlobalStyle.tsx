@@ -8,16 +8,16 @@ import {
   Nunito_Regular,
   Nunito_Light,
   Nunito_ExtraLight,
-} from "./../../fonts/font.js";
+} from "assets/fonts";
 
 import reset from "styled-reset";
 
-// --- Styled Components ---
 const GlobalStyle = createGlobalStyle`
   ${reset};
   
 	* {
     box-sizing: border-box;
+    
   }
   
   body {
@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 21px;
     color: #212529;
   }
+
   a, a:active, a:hover, a:visited{
     color: inherit;
     text-decoration: none;
