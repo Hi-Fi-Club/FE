@@ -1,17 +1,28 @@
-import 'styled-components';
+import "styled-components";
 import Mixin from "../CommonStyledCSS";
 
-declare module 'styled-components' {
+declare module "styled-components" {
   type TGrayScaleColors =
-    | 'titleActive' | 'font' | 'lightFont'
-    | 'placeHolder' | 'line' | 'inputBackground'
-    | 'background' | 'offWhite';
+    | "titleActive"
+    | "font"
+    | "lightFont"
+    | "placeHolder"
+    | "line"
+    | "inputBackground"
+    | "background"
+    | "offWhite";
   type TColors =
-    | 'basicBlue' | 'lightBlue' | 'darkBlue'
-    | 'basicGreen' | 'lightGreen' | 'darkGreen'
-    | 'error' | 'lightRed' | 'darkRed';
-  type TOptions =
-    | "horizon" | "vertical" | "direction"
+    | "basicBlue"
+    | "lightBlue"
+    | "darkBlue"
+    | "basicGreen"
+    | "lightGreen"
+    | "darkGreen"
+    | "error"
+    | "lightRed"
+    | "darkRed";
+  type TOptions = "horizon" | "vertical" | "direction";
+  type TWidth = "desktop" | "mobile";
 
   export interface DefaultTheme {
     grayScaleColors: {
@@ -20,6 +31,9 @@ declare module 'styled-components' {
     colors: {
       [color in TColors]: string;
     };
-    flexSet: (horizon?: string, vertical?: string, direction?: string) => any,
+    widthByDevice: {
+      [width in TWidth]: string;
+    };
+    flexSet: (horizon?: string, vertical?: string, direction?: string) => any;
   }
 }

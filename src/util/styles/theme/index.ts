@@ -22,6 +22,10 @@ const theme: DefaultTheme = {
     background: "#F7F7FC",
     offWhite: "#FEFEFE",
   },
+  widthByDevice: {
+    desktop: "1920px",
+    mobile: "100vw",
+  },
   flexSet: (horizon?: string, vertical?: string, direction?: string) => css`
     display: flex;
     justify-content: ${horizon || "center"};
