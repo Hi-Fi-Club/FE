@@ -46,6 +46,13 @@ const Buttons = styled.div`
 const LinkButton = styled(RoundButton)`
   width: 400px;
   height: 100px;
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 50px;
+    font-size: 15px;
+  }
+
   background-color: ${({ theme }) => theme.colors.basicBlue};
   color: ${({ theme }) => theme.grayScaleColors.offWhite};
   font-family: "Nunito_Bold";
@@ -63,5 +70,8 @@ const Guide = styled.div`
   justify-content: space-between;
   align-self: center;
   align-items: center;
+  @media (max-width: 768px) {
+    margin-top: 100px;
+  }
   margin-top: 150px;
 `;
