@@ -22,7 +22,7 @@ declare module "styled-components" {
     | "lightRed"
     | "darkRed";
   type TOptions = "horizon" | "vertical" | "direction";
-  type TWidth = "desktop" | "mobile";
+  type TDevices = "desktop" | "mobile";
 
   export interface DefaultTheme {
     grayScaleColors: {
@@ -32,7 +32,10 @@ declare module "styled-components" {
       [color in TColors]: string;
     };
     widthByDevice: {
-      [width in TWidth]: string;
+      [device in TDevices]: string;
+    };
+    paddingByDevice: {
+      [device in TDevices]: string;
     };
     flexSet: (horizon?: string, vertical?: string, direction?: string) => any;
   }

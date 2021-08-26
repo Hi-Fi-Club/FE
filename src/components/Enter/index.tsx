@@ -2,43 +2,45 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FiArrowDown } from "react-icons/fi";
-import { ROUTE } from 'util/constants';
-import { RoundButton } from 'components/Common';
-import EnterTitle from './EnterTitle';
+import { ROUTE } from "util/constants";
+import { RoundButton } from "components/Common";
+import EnterTitle from "./EnterTitle";
 
 const Enter = () => {
-
   return (
     <HeroLayout>
-        <EnterTitle/>
-        <Buttons>
-          <LinkButton>Download Mobile App</LinkButton>
-          <Link to={ROUTE.LOGIN}>
-            <LinkButton>Go To Service</LinkButton>
-          </Link>
-        </Buttons>
-        <Guide>
-          <span>Introduce HiFi, Scroll down</span>
-          <FiArrowDown size={84} />
-        </Guide>
+      <EnterTitle />
+      <Buttons>
+        <Link to={ROUTE.LOGIN}>
+          <LinkButton>Go To Service</LinkButton>
+        </Link>
+      </Buttons>
+      <Guide>
+        <span>Introduce HiFi, Scroll down</span>
+        <FiArrowDown size={84} />
+      </Guide>
     </HeroLayout>
   );
 };
 export default Enter;
 
 const HeroLayout = styled.div`
-  padding: 0 200px;
-  height:1080px;
+  padding: ${({ theme }) => theme.paddingByDevice.desktop};
+
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => theme.paddingByDevice.mobile};
+    background-position: right 30% top 0%;
+  }
+
+  height: 1080px;
   background-image: url("/hero.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   color: ${({ theme }) => theme.grayScaleColors.offWhite};
 `;
 
-
 const Buttons = styled.div`
-  display: flex;
-  justify-content: space-between;
+  ${({ theme }) => theme.flexSet()};
 `;
 
 const LinkButton = styled(RoundButton)`

@@ -44,10 +44,10 @@ const HeaderLayout = styled.div<{ isHeaderTop: Boolean }>`
 
   @media (max-width: 768px) {
     width: ${({ theme }) => theme.widthByDevice.mobile};
-    padding: 0 2em;
+    padding: ${({ theme }) => theme.paddingByDevice.mobile};
   }
 
-  padding: 0 200px;
+  padding: ${({ theme }) => theme.paddingByDevice.desktop};
   position: fixed;
   box-shadow: ${({ isHeaderTop }) => (isHeaderTop ? "none" : "0.3em 0.3em 1em rgba(0, 0, 0, 0.3)")};
   background-color: ${({ isHeaderTop, theme }) => (isHeaderTop ? "transparent" : `${theme.grayScaleColors.offWhite}`)};
