@@ -39,9 +39,15 @@ export default Header;
 
 const HeaderLayout = styled.div<{ isHeaderTop: Boolean }>`
   ${({ theme }) => theme.flexSet("space-between")};
-  width: 100%;
+  width: ${({ theme }) => theme.widthByDevice.desktop};
   height: 64px;
-  padding: 0 200px;
+
+  @media (max-width: 768px) {
+    width: ${({ theme }) => theme.widthByDevice.mobile};
+    padding: ${({ theme }) => theme.paddingByDevice.mobile};
+  }
+
+  padding: ${({ theme }) => theme.paddingByDevice.desktop};
   position: fixed;
   box-shadow: ${({ isHeaderTop }) => (isHeaderTop ? "none" : "0.3em 0.3em 1em rgba(0, 0, 0, 0.3)")};
   background-color: ${({ isHeaderTop, theme }) => (isHeaderTop ? "transparent" : `${theme.grayScaleColors.offWhite}`)};
