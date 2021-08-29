@@ -4,4 +4,5 @@ export const ROUTE = {
   MAIN: "/main",
   INTEREST: "/interest",
   LOCATION: "/location",
+  OAUTH: "/oauth/kakao/callback",
 };
