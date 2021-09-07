@@ -161,6 +161,7 @@ const ButtonBox = styled.div`
   align-items: center;
   justify-content: center;
   gap: 4px;
+  height: 50px;
 `;
 
 const NextButton = styled(RoundButton)`
