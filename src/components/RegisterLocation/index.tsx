@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Container } from "@material-ui/core";
 import useInput from "@/hooks/useInput";
@@ -6,6 +7,7 @@ import { FiSearch } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import RoundButton from "components/Common/Buttons/RoundButton";
 import TargetButton from "./TargetButton";
+import { ROUTE } from "util/constants";
 type Address = {
   [key: string]: string;
 };
@@ -18,6 +20,7 @@ interface LocationResult {
   y: string;
 }
 const RegisterLocation = () => {
+  const history = useHistory();
   const [locationInput, onChangeLocation, setLocationInput] = useInput("");
   const [countGuide, setCountGuide] = useState(false);
   const [locationResult, setLocationResult] = useState<LocationResult[]>([]);
@@ -42,6 +45,11 @@ const RegisterLocation = () => {
     } //태그2개이상선택시 return
 
     setTargetLocations((prev) => prev.concat([dongName]));
+  };
+
+  const handleNextPage = () => {
+    if (targetLocations.length !== 2) return;
+    history.push(ROUTE.MAIN);
   };
 
   return (
@@ -95,9 +103,9 @@ const RegisterLocation = () => {
             ))}
           </ButtonBox>
 
-          <Link to="/">
-            <NextButton variant="outlined">다음 ({targetLocations.length}/2)</NextButton>
-          </Link>
+          <NextButton onClick={handleNextPage} variant="outlined">
+            다음 ({targetLocations.length}/2)
+          </NextButton>
         </LocationBox>
       </LocationRow>
     </RegisterLocationLayout>
