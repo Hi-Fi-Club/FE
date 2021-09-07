@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Container } from "@material-ui/core";
-import { FiSearch } from "react-icons/fi";
 import useInput from "@/hooks/useInput";
+import { FiSearch } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import RoundButton from "components/Common/Buttons/RoundButton";
 import TargetButton from "./TargetButton";
@@ -54,15 +54,15 @@ const RegisterLocation = () => {
 
         <LocationBox>
           <SearchBox>
-            <SearchInput
+            <input
               name="search"
               placeholder="동네이름을 입력해주세요 ex)역삼동"
               value={locationInput}
               onChange={onChangeLocation}
             />
-            <SearchSubmitBtn type="submit" onClick={handleSubmitLocation}>
+            <button type="submit" onClick={handleSubmitLocation}>
               <FiSearch />
-            </SearchSubmitBtn>
+            </button>
           </SearchBox>
         </LocationBox>
 
@@ -154,14 +154,6 @@ const SearchBox = styled.div`
   grid-template-columns: 80% 20%;
   min-width: 300px;
 `;
-const SearchInput = styled.input``;
-
-const SearchSubmitBtn = styled.button`
-  position: relative;
-  left: -10px;
-  top: -11px;
-`;
-
 const ButtonBox = styled.div`
   // 중복 (관심사 페이지)
   display: flex;

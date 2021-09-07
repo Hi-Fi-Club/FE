@@ -17,16 +17,12 @@ const TargetButton = ({ location, targetLocations, setTargetLocations }: ResultP
     setTargetLocations(targetLocations.filter((target) => target !== location));
   };
   return (
-    <div>
-      <HoverActive onMouseEnter={handleHover} onMouseLeave={handleHover}>
-        <SelectedItemButton disableRipple={true}>{location}</SelectedItemButton>
-        {isHoverState && (
-          <DeleteButton isHoverState={isHoverState} onClick={() => handleDelete(location)}>
-            ×
-          </DeleteButton>
-        )}
-      </HoverActive>
-    </div>
+    <HoverActive onMouseEnter={handleHover} onMouseLeave={handleHover}>
+      <SelectedItemButton disableRipple={true}>{location}</SelectedItemButton>
+      <DeleteButton isHoverState={isHoverState} onClick={() => handleDelete(location)}>
+        ×
+      </DeleteButton>
+    </HoverActive>
   );
 };
 
@@ -37,6 +33,9 @@ interface Delete {
 const HoverActive = styled.div``;
 const DeleteButton = styled.button<Delete>`
   display: ${({ isHoverState }) => (isHoverState ? "block" : "none")};
+  position: relative;
+  top: -11px;
+  left: -8px;
 `;
 const SelectedItemButton = styled(RoundButton)`
   // 중복 (관심사 페이지)
