@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import RoundButton from "components/Common/Buttons/RoundButton";
 import { ROUTE } from "util/constants";
+import { isLogin } from "util/funcs";
 
 const Header = () => {
+  const isLogined = isLogin();
   const location = useLocation();
   const { ENTER, LOGIN } = ROUTE;
   const [isHeaderTop, setHeaderTop] = useState(true);
@@ -19,6 +21,11 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const onLogOut = () => {
+    localStorage.removeItem("user");
+    window.location.replace(location.pathname);
+  };
+
   return (
     <HeaderLayout isHeaderTop={isHeaderTop}>
       <Link to={ENTER}>
@@ -26,9 +33,13 @@ const Header = () => {
       </Link>
       {location.pathname === ENTER && ( //로그인상태조건반영 + SIGNOUT
         <ButtonContainer>
-          <Link to={LOGIN}>
-            <LoginButton>Sign In</LoginButton>
-          </Link>
+          {isLogined ? (
+            <LoginButton onClick={onLogOut}>Sign Out</LoginButton>
+          ) : (
+            <Link to={LOGIN}>
+              <LoginButton>Sign In</LoginButton>
+            </Link>
+          )}
         </ButtonContainer>
       )}
     </HeaderLayout>

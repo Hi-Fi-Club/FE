@@ -3,15 +3,19 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FiArrowDown } from "react-icons/fi";
 import { ROUTE } from "util/constants";
+import { isLogin } from "util/funcs";
 import { RoundButton } from "components/Common";
 import EnterTitle from "./EnterTitle";
+import { useMemo } from "react";
 
 const Enter = () => {
+  const isLogined = useMemo(() => isLogin(), []);
+
   return (
     <HeroLayout>
       <EnterTitle />
       <Buttons>
-        <Link to={ROUTE.LOGIN}>
+        <Link to={isLogined ? ROUTE.MAIN : ROUTE.LOGIN}>
           <LinkButton>Go To Service</LinkButton>
         </Link>
       </Buttons>

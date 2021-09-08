@@ -14,10 +14,11 @@ const LoginLoadingPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: `code: ${code}`,
+      body: JSON.stringify({ code }),
     });
-    const res = login.json();
-    console.log(res);
+    const res = await login.json();
+    localStorage.setItem("user", JSON.stringify(res));
+    setIsLogin(true);
   };
 
   useEffect(() => {
