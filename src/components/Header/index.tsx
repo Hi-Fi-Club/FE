@@ -6,8 +6,8 @@ import RoundButton from "components/Common/Buttons/RoundButton";
 import { ROUTE } from "util/constants";
 
 const Header = () => {
-  const location = useLocation();
   const { ENTER, LOGIN } = ROUTE;
+  const location = useLocation();
   const [isHeaderTop, setHeaderTop] = useState(true);
 
   // 나중에 디바운서 or 쓰로틀링

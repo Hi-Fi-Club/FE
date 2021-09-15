@@ -1,43 +1,111 @@
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
+import useInput from "@/hooks/useInput";
 import { FiSearch } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import RoundButton from "components/Common/Buttons/RoundButton";
-
+import TargetButton from "./TargetButton";
+import { ROUTE } from "util/constants";
+type Address = {
+  [key: string]: string;
+};
+interface LocationResult {
+  address: Address;
+  address_name: string;
+  address_type: string;
+  road_address: null;
+  x: string;
+  y: string;
+}
 const RegisterLocation = () => {
+  const history = useHistory();
+  const [locationInput, onChangeLocation, setLocationInput] = useInput("");
+  const [countGuide, setCountGuide] = useState(false);
+  const [locationResult, setLocationResult] = useState<LocationResult[]>([]);
+  const [targetLocations, setTargetLocations] = useState<string[]>([]);
+
+  const handleSubmitLocation = async () => {
+    const hostURL = `http://dapi.kakao.com/v2/local/search/address.json?query=${locationInput}`;
+    const REST_API_KEY = `95a473cfb21c6a0fee070ac4328bb2b3`;
+    const header = { headers: { Authorization: `KakaoAK ${REST_API_KEY}` } };
+    const result = await fetch(hostURL, header).then((res) => res.json());
+    setLocationResult(result.documents);
+    setLocationInput("");
+  };
+
+  const handleTargetLocation = (region: string) => {
+    const dongName = region.split(" ").reverse()[0];
+    if (targetLocations.includes(dongName)) return; //이미 포함된 것은 제외시킴
+    if (targetLocations.length > 1) {
+      setCountGuide(true);
+      setLocationResult([]);
+      return;
+    } //태그2개이상선택시 return
+
+    setTargetLocations((prev) => prev.concat([dongName]));
+  };
+
+  const handleNextPage = () => {
+    if (targetLocations.length !== 2) return;
+    history.push(ROUTE.MAIN);
+  };
+
   return (
     <RegisterLocationLayout>
       <LocationRow>
         <LocationBox>
-          <NoticeParagraph>ㅇㅇ님의 관심있는 지역 정보를 알려주세요</NoticeParagraph>
-          <NoticeParagraph>해당 지역의 스터디 정보를 추천해드립니다.</NoticeParagraph>
+          <NoticeParagraph>ㅇㅇ님의 관심있는 동네를 알려주세요</NoticeParagraph>
+          <NoticeParagraph>2 지역의 스터디 정보를 볼 수 있어요</NoticeParagraph>
         </LocationBox>
 
         <LocationBox>
           <SearchBox>
-            <SearchInput name="search" placeholder="동네이름을 입력해주세요" />
-            <SearchSubmitBtn>
+            <input
+              name="search"
+              placeholder="동네이름을 입력해주세요 ex)역삼동"
+              value={locationInput}
+              onChange={onChangeLocation}
+            />
+            <button type="submit" onClick={handleSubmitLocation}>
               <FiSearch />
-            </SearchSubmitBtn>
+            </button>
           </SearchBox>
         </LocationBox>
 
         <LocationHelpBox>
-          <span>찾으시는 동네가 어디신가요?</span>
-          <ul>
-            <li>• 강남구 역삼동</li>
-            <li>• 용인시 역삼동</li>
-          </ul>
+          {countGuide && <div>새 지역을 추가하시려면 기존 정보를 취소하고 진행해주세요.</div>}
+          {locationResult.length > 0 && (
+            <>
+              <span>찾으시는 동네가 어디신가요?</span>
+              <ul>
+                {locationResult.map((location, idx) => (
+                  <li
+                    key={idx}
+                    onClick={() => handleTargetLocation(location.address_name)}
+                  >{`•  ${location?.address_name}`}</li>
+                ))}
+              </ul>
+            </>
+          )}
         </LocationHelpBox>
 
         <LocationBox>
           <ButtonBox>
-            <SelectedItemButton disableRipple={true}>역삼동</SelectedItemButton>
-            <SelectedItemButton disableRipple={true}>여의도</SelectedItemButton>
+            {targetLocations.map((location, idx) => (
+              <TargetButton
+                key={idx}
+                location={location}
+                targetLocations={targetLocations}
+                setTargetLocations={setTargetLocations}
+              />
+            ))}
           </ButtonBox>
-          <Link to="/">
-            <NextButton variant="outlined">다음 (2/2)</NextButton>
-          </Link>
+
+          <NextButton onClick={handleNextPage} variant="outlined">
+            다음 ({targetLocations.length}/2)
+          </NextButton>
         </LocationBox>
       </LocationRow>
     </RegisterLocationLayout>
@@ -78,6 +146,7 @@ const LocationHelpBox = styled(LocationBox)`
   font-size: 16px;
 
   li {
+    cursor: pointer;
     font-size: 14px;
   }
 `;
@@ -93,10 +162,6 @@ const SearchBox = styled.div`
   grid-template-columns: 80% 20%;
   min-width: 300px;
 `;
-
-const SearchInput = styled.input``;
-const SearchSubmitBtn = styled.button``;
-
 const ButtonBox = styled.div`
   // 중복 (관심사 페이지)
   display: flex;
@@ -104,15 +169,7 @@ const ButtonBox = styled.div`
   align-items: center;
   justify-content: center;
   gap: 4px;
-`;
-
-const SelectedItemButton = styled(RoundButton)`
-  // 중복 (관심사 페이지)
-  background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
-  color: ${({ theme }) => theme.grayScaleColors.offWhite};
-  &:hover {
-    background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
-  }
+  height: 50px;
 `;
 
 const NextButton = styled(RoundButton)`
