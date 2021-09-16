@@ -8,7 +8,7 @@ const LoginPage = () => {
       <ContentsWrapper>
         <Logo />
         <Line /> Login with Service Account <Line />
-        <a href={API.kakaoOauth()}>
+        <a href={API.kakaoOauthLogin()}>
           <LoginKakao />
         </a>
       </ContentsWrapper>

@@ -4,7 +4,7 @@ import Header from "components/Header";
 import { ROUTE } from "util/constants";
 import LoginLoadingPage from "@/pages/LoginLoadingPage";
 const Routes = () => {
-  const { ENTER, LOGIN, MAIN, INTEREST, LOCATION, OAUTH } = ROUTE;
+  const { ENTER, LOGIN, MAIN, INTEREST, LOCATION, OAUTH_LOGIN } = ROUTE;
   return (
     <Router>
       <Header />
@@ -15,7 +15,7 @@ const Routes = () => {
         {/* <Route path ={'/mypage'} component={MyPage} exact /> */}
         <Route path={INTEREST} component={InterestPage} exact />
         <Route path={LOCATION} component={LocationPage} exact />
-        <Route path={OAUTH} component={LoginLoadingPage} exact />
+        <Route path={OAUTH_LOGIN} component={LoginLoadingPage} exact />
         {/* <Route path ={'/recruitments/pages/:page'} component={RecruitmentsPage} exact /> */}
         {/* <Route path ={'/recruitments/:id'} component={RecruitmentDetailPage} exact /> */}
         {/* <Route path ={'/recruitments/new'} component={newRecruitmentPage} exact /> */}

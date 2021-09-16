@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import RoundButton from "components/Common/Buttons/RoundButton";
 import { ROUTE } from "util/constants";
 import { isLogin } from "util/funcs";
+import API from "@/util/API";
 
 const Header = () => {
   const isLogined = isLogin();
@@ -34,7 +35,9 @@ const Header = () => {
       {location.pathname === ENTER && ( //로그인상태조건반영 + SIGNOUT
         <ButtonContainer>
           {isLogined ? (
-            <LoginButton onClick={onLogOut}>Sign Out</LoginButton>
+            <a href={API.kakaoOauthLogout()}>
+              <LoginButton onClick={onLogOut}>Sign Out</LoginButton>
+            </a>
           ) : (
             <Link to={LOGIN}>
               <LoginButton>Sign In</LoginButton>
