@@ -17,7 +17,7 @@ const Header = () => {
     if (location.pathname !== ENTER) return;
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname, ENTER]);
 
   return (
     <HeaderLayout isHeaderTop={isHeaderTop}>

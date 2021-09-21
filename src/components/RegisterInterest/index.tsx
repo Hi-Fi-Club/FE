@@ -1,70 +1,113 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import RoundButton from "components/Common/Buttons/RoundButton";
 import { intersetData } from "util/mockData";
+import { useHistory } from "react-router";
 
 type TCategoryType = "main" | "sub";
 interface IInterestButton {
   selected?: boolean;
   category?: TCategoryType;
 }
-interface ISelectedBtnInfo {
+
+type TSelectItem = {
   mainIdx: number;
-  subIdxs: number[];
+  subIdx: number;
+  value?: string;
+};
+interface ISelectedInfo {
+  selectedMainIdx: number;
+  items: TSelectItem[];
 }
 
 const INIT_INDEX = -1;
+const MAX_SELECT_NUM = 5;
 
 const RegisterInterest = () => {
-  const [selectedBtnInfo, setSelectedBtnInfo] = useState<ISelectedBtnInfo>({
-    mainIdx: INIT_INDEX,
-    subIdxs: [],
+  const history = useHistory();
+  const [selectedBtnInfo, setSelectedBtnInfo] = useState<ISelectedInfo>({
+    selectedMainIdx: INIT_INDEX,
+    items: [],
   });
 
-  const handleInterestMainBtnClick = (e: React.MouseEvent | MouseEvent, idx: number) => 
+  // 대분류 선택
+  const handleInterestMainBtnClick = (e: React.MouseEvent | MouseEvent, idx: number) =>
     setSelectedBtnInfo((state) => {
-      const { mainIdx }  = state;
+      const { selectedMainIdx } = state;
       return {
         ...state,
-        mainIdx: (idx === mainIdx ? INIT_INDEX : idx),
-      }
+        selectedMainIdx: idx === selectedMainIdx ? INIT_INDEX : idx,
+      };
     });
- 
+
+  // 소분류 선택 (관심사 추가)
   const handleInterestSubBtnClick = (e: React.MouseEvent | MouseEvent, idx: number) => {
+    const target = e.target as HTMLButtonElement;
     setSelectedBtnInfo((state) => {
-      const { subIdxs } = state;
-      const newSubIdxs = subIdxs.includes(idx) ? subIdxs.filter((subIdx:number) => subIdx !== idx) : subIdxs.concat(idx);
+      const { selectedMainIdx, items } = state;
+
+      const isDupItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === idx);
+      const nextItems = isDupItem
+        ? items.filter(({ mainIdx, subIdx }) => !(mainIdx === selectedMainIdx && subIdx === idx))
+        : items.concat({ mainIdx: selectedMainIdx, subIdx: idx, value: target.innerText });
+
       return {
         ...state,
-        subIdxs: newSubIdxs,
-      }
+        items: nextItems,
+      };
     });
-  }
+  };
 
-  const mainCategoryBtns = intersetData.map(({ value, id }) => (
-    <InterestButton
-      key={id}
-      selected={selectedBtnInfo.mainIdx === id}
-      onClick={(e) => handleInterestMainBtnClick(e, id)}
-    >
-      {value}
-    </InterestButton>
-  ));
+  // 현재 선택한 관심사들에서 클릭한 관심사 제거
+  const handleSelectedItemBtnClick = (e: React.MouseEvent | MouseEvent, selectItemId: string) => {
+    const [mainIdx, subIdx] = selectItemId.split("|").map((v) => +v);
+    if (mainIdx <= 0 || subIdx <= 0) return;
+    setSelectedBtnInfo((state) => {
+      const { items } = state;
+      return {
+        ...state,
+        items: items.filter((item) => mainIdx !== item.mainIdx || subIdx !== item.subIdx),
+      };
+    });
+  };
 
-  const subCategoryBtns = intersetData
-    .find(({ id: mainId }) => mainId === selectedBtnInfo.mainIdx)
-    ?.subCategories.map(({ value, id }) => (
-      <InterestButton
-        key={id}
-        variant="outlined"
-        color={selectedBtnInfo.subIdxs.includes(id) ? "primary" : "default"}
-        onClick={(e) => handleInterestSubBtnClick(e, id)}
-      >
-        {value}
-      </InterestButton>
-    ));
+  // 관심사 5개 선택한 후 주변 장소 설정 페이지로 이동
+  const handleNextButtonClick = (e: React.MouseEvent | MouseEvent) => {
+    const { items } = selectedBtnInfo;
+    items.length === 5 && history.push('/location');
+  };
+
+  const mainCategoryBtns = useMemo(
+    () =>
+      intersetData.map(({ value, id }) => (
+        <InterestButton
+          key={id}
+          selected={selectedBtnInfo.selectedMainIdx === id}
+          onClick={(e) => handleInterestMainBtnClick(e, id)}
+        >
+          {value}
+        </InterestButton>
+      )),
+    [selectedBtnInfo.selectedMainIdx],
+  );
+
+  const subCategoryBtns = useMemo(() => {
+    const { selectedMainIdx, items } = selectedBtnInfo;
+    const mainCategoryData = intersetData.find(({ id: mainId }) => mainId === selectedBtnInfo.selectedMainIdx);
+
+    if (!mainCategoryData) return [];
+
+    return mainCategoryData.subCategories.map(({ value, id }) => {
+      const selectedSubItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === id);
+      const currColor = selectedSubItem ? "primary" : "default";
+      return (
+        <InterestButton key={id} variant="outlined" color={currColor} onClick={(e) => handleInterestSubBtnClick(e, id)}>
+          {value}
+        </InterestButton>
+      );
+    });
+  }, [selectedBtnInfo]);
 
   return (
     <RegisterInterestLayout>
@@ -72,7 +115,7 @@ const RegisterInterest = () => {
         <InterestBox>
           <span>ㅇㅇ님의 관심분야를 선택해주세요</span>
           {mainCategoryBtns.length > 0 && <ButtonBox>{mainCategoryBtns}</ButtonBox>}
-          {selectedBtnInfo.mainIdx > INIT_INDEX && subCategoryBtns && (
+          {selectedBtnInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && (
             <>
               <SeparatedLine />
               <ButtonBox>{subCategoryBtns}</ButtonBox>
@@ -81,18 +124,26 @@ const RegisterInterest = () => {
         </InterestBox>
       </InterestRow>
 
-      {selectedBtnInfo.subIdxs.length > 0 && (
+      {selectedBtnInfo.items.length > 0 && (
         <InterestResultRow>
           <InterestBox>
             <SeparatedLine />
             <ButtonBox>
-              {/* state.mainIdx에 선택된 mockData -> mainId의 subCategories에서 state.subIdxs에 들어있는 subId를 가져와서 렌더링 (find)  */}
-              {selectedBtnInfo.subIdxs.map((el, idx)=><SelectedItemButton key={el} disableRipple={true}>{el}</SelectedItemButton>)}
+              {selectedBtnInfo.items.map(({ mainIdx, subIdx, value }) => (
+                <SelectedItemButton
+                  key={`${mainIdx}|${subIdx}`}
+                  disableRipple={true}
+                  onClick={(e) => handleSelectedItemBtnClick(e, `${mainIdx}|${subIdx}`)}
+                >
+                  {value}
+                </SelectedItemButton>
+              ))}
             </ButtonBox>
-
-            <Link to="/location">
-              <NextButton variant="outlined">다음 (1/2)</NextButton>
-            </Link>
+            {selectedBtnInfo.items.length === MAX_SELECT_NUM && (
+              <NextButton variant="outlined" onClick={handleNextButtonClick}>
+                다음 (1/2)
+              </NextButton>
+            )}
           </InterestBox>
         </InterestResultRow>
       )}
