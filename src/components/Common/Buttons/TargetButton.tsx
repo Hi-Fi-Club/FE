@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { IoClose } from "react-icons/io5";
 import RoundButton from "./RoundButton";
 
 type TTargetButtonProps = {
   displayName: string;
-  onDeleteItemClick: (e : React.MouseEvent | MouseEvent) => void,
+  onDeleteItemClick: (e: React.MouseEvent | MouseEvent) => void;
   // items: string[];
   // setItems: Dispatch<SetStateAction<string[]>>;
 };
@@ -12,34 +13,45 @@ type TTargetButtonProps = {
 const TargetButton = ({ displayName, onDeleteItemClick }: TTargetButtonProps) => {
   const [isHoverState, setHoverState] = useState(false);
 
-  const handleHover = () => setHoverState((prev) => !prev);
+  // const handleHover = () => setHoverState((prev) => !prev);
+  const handleMouseEnter = () => isHoverState || setHoverState((prev) => !prev);
+  const handleMouseLeave = () => isHoverState && setHoverState((prev) => !prev);
 
   return (
-    <HoverActive onMouseEnter={handleHover} onMouseLeave={handleHover}>
+    <TargetButtonLayout onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <SelectedItemButton disableRipple={true}>{displayName}</SelectedItemButton>
-      <DeleteButton isHoverState={isHoverState} onClick={onDeleteItemClick}>
-        ×
-      </DeleteButton>
-    </HoverActive>
+      {isHoverState && (
+        <DeleteButton onClick={onDeleteItemClick}>
+          <IoClose />
+        </DeleteButton>
+      )}
+    </TargetButtonLayout>
   );
 };
 
-interface Delete {
-  isHoverState: boolean;
-}
+export default TargetButton;
 
-const HoverActive = styled.div``;
-const DeleteButton = styled.button<Delete>`
-  display: ${({ isHoverState }) => (isHoverState ? "block" : "none")};
+const TargetButtonLayout = styled.div`
   position: relative;
-  top: -11px;
-  left: -8px;
 `;
+
 const SelectedItemButton = styled(RoundButton)`
   background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
   color: ${({ theme }) => theme.grayScaleColors.offWhite};
   &:hover {
     background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
+    cursor: default;
   }
 `;
-export default TargetButton;
+
+const DeleteButton = styled.button`
+  ${({ theme }) => theme.flexSet()};
+  padding: 0;
+  margin: 0;
+
+  position: absolute;
+  color: ${({ theme }) => theme.colors.error};
+  font-size: 0.8em;
+  right: 3px;
+  top: 2.5px;
+`;

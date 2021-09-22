@@ -1,5 +1,4 @@
 import "styled-components";
-import Mixin from "../CommonStyledCSS";
 
 declare module "styled-components" {
   type TGrayScaleColors =
@@ -37,6 +36,6 @@ declare module "styled-components" {
     paddingByDevice: {
       [device in TDevices]: string;
     };
-    flexSet: (horizon?: string, vertical?: string, direction?: string) => any;
+    flexSet: (horizon?: string, vertical?: string, direction?: string) => FlattenSimpleInterpolation;
   }
 }

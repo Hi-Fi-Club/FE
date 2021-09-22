@@ -5,37 +5,33 @@ import { useHistory } from "react-router";
 
 import { RoundButton, TargetButton } from "components/Common/Buttons";
 import { intersetData } from "util/mockData";
-import { ROUTE } from "util/constants"
-
-type TCategoryType = "main" | "sub";
-interface IInterestButton {
-  selected?: boolean;
-  category?: TCategoryType;
-}
+import { ROUTE } from "util/constants";
 
 type TSelectItem = {
   mainIdx: number;
   subIdx: number;
   value?: string;
 };
-interface ISelectedInfo {
+type TSelectedInfo = {
   selectedMainIdx: number;
+  isMax: boolean;
   items: TSelectItem[];
-}
+};
 
 const INIT_INDEX = -1;
 const MAX_SELECT_NUM = 5;
 
 const RegisterInterest = () => {
   const history = useHistory();
-  const [selectedBtnInfo, setSelectedBtnInfo] = useState<ISelectedInfo>({
+  const [selectedInfo, setSelectedInfo] = useState<TSelectedInfo>({
     selectedMainIdx: INIT_INDEX,
+    isMax: false,
     items: [],
   });
 
   // 대분류 선택
-  const handleInterestMainBtnClick = (e: React.MouseEvent | MouseEvent, idx: number) =>
-    setSelectedBtnInfo((state) => {
+  const handleInterestMainBtnClick = (idx: number) => (e: React.MouseEvent | MouseEvent) =>
+    setSelectedInfo((state) => {
       const { selectedMainIdx } = state;
       return {
         ...state,
@@ -44,19 +40,24 @@ const RegisterInterest = () => {
     });
 
   // 소분류 선택 (관심사 추가)
-  const handleInterestSubBtnClick = (e: React.MouseEvent | MouseEvent, idx: number) => {
+  const handleInterestSubBtnClick = (idx: number) => (e: React.MouseEvent | MouseEvent) => {
     const target = e.target as HTMLButtonElement;
-    setSelectedBtnInfo((state) => {
+    setSelectedInfo((state) => {
       const { selectedMainIdx, items } = state;
 
       const isDupItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === idx);
+      const appliedItems =
+        items.length < MAX_SELECT_NUM
+          ? items.concat({ mainIdx: selectedMainIdx, subIdx: idx, value: target.innerText })
+          : items;
       const nextItems = isDupItem
         ? items.filter(({ mainIdx, subIdx }) => !(mainIdx === selectedMainIdx && subIdx === idx))
-        : items.concat({ mainIdx: selectedMainIdx, subIdx: idx, value: target.innerText });
+        : appliedItems;
 
       return {
         ...state,
         items: nextItems,
+        isMax: nextItems.length >= MAX_SELECT_NUM,
       };
     });
   };
@@ -65,19 +66,21 @@ const RegisterInterest = () => {
   const handleSelectedItemBtnClick = (selectItemId: string) => (e: React.MouseEvent | MouseEvent) => {
     const [mainIdx, subIdx] = selectItemId.split("|").map((v) => +v);
     if (mainIdx <= 0 || subIdx <= 0) return;
-    setSelectedBtnInfo((state) => {
-      const { items } = state;
+    setSelectedInfo((state) => {
+      const { items: currItems } = state;
+      const items = currItems.filter((item) => mainIdx !== item.mainIdx || subIdx !== item.subIdx);
       return {
         ...state,
-        items: items.filter((item) => mainIdx !== item.mainIdx || subIdx !== item.subIdx),
+        items,
+        isMax: items.length >= MAX_SELECT_NUM,
       };
     });
   };
 
   // 관심사 5개 선택한 후 주변 장소 설정 페이지로 이동
   const handleNextButtonClick = (e: React.MouseEvent | MouseEvent) => {
-    const { items } = selectedBtnInfo;
-    items.length === 5 && history.push(ROUTE.USER.LOCATION);
+    const { isMax } = selectedInfo;
+    isMax && history.push(ROUTE.USER.LOCATION);
   };
 
   const mainCategoryBtns = useMemo(
@@ -85,18 +88,18 @@ const RegisterInterest = () => {
       intersetData.map(({ value, id }) => (
         <InterestButton
           key={id}
-          selected={selectedBtnInfo.selectedMainIdx === id}
-          onClick={(e) => handleInterestMainBtnClick(e, id)}
+          selected={selectedInfo.selectedMainIdx === id}
+          onClick={handleInterestMainBtnClick(id)}
         >
           {value}
         </InterestButton>
       )),
-    [selectedBtnInfo.selectedMainIdx],
+    [selectedInfo.selectedMainIdx],
   );
 
   const subCategoryBtns = useMemo(() => {
-    const { selectedMainIdx, items } = selectedBtnInfo;
-    const mainCategoryData = intersetData.find(({ id: mainId }) => mainId === selectedBtnInfo.selectedMainIdx);
+    const { selectedMainIdx, items } = selectedInfo;
+    const mainCategoryData = intersetData.find(({ id: mainId }) => mainId === selectedInfo.selectedMainIdx);
 
     if (!mainCategoryData) return [];
 
@@ -104,12 +107,12 @@ const RegisterInterest = () => {
       const selectedSubItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === id);
       const currColor = selectedSubItem ? "primary" : "default";
       return (
-        <InterestButton key={id} variant="outlined" color={currColor} onClick={(e) => handleInterestSubBtnClick(e, id)}>
+        <InterestButton key={id} variant="outlined" color={currColor} onClick={handleInterestSubBtnClick(id)}>
           {value}
         </InterestButton>
       );
     });
-  }, [selectedBtnInfo]);
+  }, [selectedInfo]);
 
   return (
     <RegisterInterestLayout>
@@ -117,7 +120,7 @@ const RegisterInterest = () => {
         <InterestBox>
           <span>ㅇㅇ님의 관심분야를 선택해주세요</span>
           {mainCategoryBtns.length > 0 && <ButtonBox>{mainCategoryBtns}</ButtonBox>}
-          {selectedBtnInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && (
+          {selectedInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && (
             <>
               <SeparatedLine />
               <ButtonBox>{subCategoryBtns}</ButtonBox>
@@ -126,24 +129,27 @@ const RegisterInterest = () => {
         </InterestBox>
       </InterestRow>
 
-      {selectedBtnInfo.items.length > 0 && (
+      {selectedInfo.items.length > 0 && (
         <InterestResultRow>
           <InterestBox>
             <SeparatedLine />
             <ButtonBox>
-              {selectedBtnInfo.items.map(({ mainIdx, subIdx, value }) => (
+              {selectedInfo.items.map(({ mainIdx, subIdx, value }) => (
                 <TargetButton
                   key={`${mainIdx}|${subIdx}`}
-                  displayName={value || ''}
+                  displayName={value || ""}
                   onDeleteItemClick={handleSelectedItemBtnClick(`${mainIdx}|${subIdx}`)}
                 />
               ))}
             </ButtonBox>
-            {selectedBtnInfo.items.length === MAX_SELECT_NUM && (
-              <NextButton variant="outlined" onClick={handleNextButtonClick}>
-                다음 (1/2)
-              </NextButton>
-            )}
+            <NextButton
+              variant="outlined"
+              onClick={handleNextButtonClick}
+              disableRipple={!selectedInfo.isMax}
+              selected={selectedInfo.isMax}
+            >
+              다음 {`(${selectedInfo.items.length} / ${MAX_SELECT_NUM})`}
+            </NextButton>
           </InterestBox>
         </InterestResultRow>
       )}
@@ -152,6 +158,13 @@ const RegisterInterest = () => {
 };
 
 export default RegisterInterest;
+
+type TCategoryType = "main" | "sub";
+type TInterestButton = {
+  selected?: boolean;
+  category?: TCategoryType;
+};
+type TNextButton = Pick<TInterestButton, "selected">;
 
 const RegisterInterestLayout = styled(Container)`
   padding-top: 64px;
@@ -180,7 +193,6 @@ const InterestBox = styled.div`
   flex-direction: column;
   row-gap: 4px;
 `;
-// ---
 
 const ButtonBox = styled.div`
   display: flex;
@@ -190,7 +202,7 @@ const ButtonBox = styled.div`
   gap: 4px;
 `;
 
-const InterestButton = styled(RoundButton)<IInterestButton>`
+const InterestButton = styled(RoundButton)<TInterestButton>`
   ${({ selected }) =>
     selected &&
     css`
@@ -202,17 +214,12 @@ const InterestButton = styled(RoundButton)<IInterestButton>`
     `};
 `;
 
-// const SelectedItemButton = styled(RoundButton)`
-//   background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
-//   color: ${({ theme }) => theme.grayScaleColors.offWhite};
-//   &:hover {
-//     background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
-//   }
-// `;
-
-const NextButton = styled(RoundButton)`
+const NextButton = styled(RoundButton)<TNextButton>`
   border-radius: 12px;
   margin: 8px 0;
+  background-color: ${({ selected }) => (selected ? `transparent` : `rgba(0, 0, 0, 0.04)`)};
+  user-select: ${({ selected }) => (selected ? `auto` : `none`)};
+  pointer-events: ${({ selected }) => (selected ? `auto` : `none`)};;
 `;
 
 const SeparatedLine = styled.div`
