@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
 import styled, { css } from "styled-components";
 import { Container } from "@material-ui/core";
-import RoundButton from "components/Common/Buttons/RoundButton";
-import { intersetData } from "util/mockData";
 import { useHistory } from "react-router";
+
+import { RoundButton, TargetButton } from "components/Common/Buttons";
+import { intersetData } from "util/mockData";
+import { ROUTE } from "util/constants"
 
 type TCategoryType = "main" | "sub";
 interface IInterestButton {
@@ -60,7 +62,7 @@ const RegisterInterest = () => {
   };
 
   // 현재 선택한 관심사들에서 클릭한 관심사 제거
-  const handleSelectedItemBtnClick = (e: React.MouseEvent | MouseEvent, selectItemId: string) => {
+  const handleSelectedItemBtnClick = (selectItemId: string) => (e: React.MouseEvent | MouseEvent) => {
     const [mainIdx, subIdx] = selectItemId.split("|").map((v) => +v);
     if (mainIdx <= 0 || subIdx <= 0) return;
     setSelectedBtnInfo((state) => {
@@ -75,7 +77,7 @@ const RegisterInterest = () => {
   // 관심사 5개 선택한 후 주변 장소 설정 페이지로 이동
   const handleNextButtonClick = (e: React.MouseEvent | MouseEvent) => {
     const { items } = selectedBtnInfo;
-    items.length === 5 && history.push('/location');
+    items.length === 5 && history.push(ROUTE.USER.LOCATION);
   };
 
   const mainCategoryBtns = useMemo(
@@ -130,13 +132,11 @@ const RegisterInterest = () => {
             <SeparatedLine />
             <ButtonBox>
               {selectedBtnInfo.items.map(({ mainIdx, subIdx, value }) => (
-                <SelectedItemButton
+                <TargetButton
                   key={`${mainIdx}|${subIdx}`}
-                  disableRipple={true}
-                  onClick={(e) => handleSelectedItemBtnClick(e, `${mainIdx}|${subIdx}`)}
-                >
-                  {value}
-                </SelectedItemButton>
+                  displayName={value || ''}
+                  onDeleteItemClick={handleSelectedItemBtnClick(`${mainIdx}|${subIdx}`)}
+                />
               ))}
             </ButtonBox>
             {selectedBtnInfo.items.length === MAX_SELECT_NUM && (
@@ -202,13 +202,13 @@ const InterestButton = styled(RoundButton)<IInterestButton>`
     `};
 `;
 
-const SelectedItemButton = styled(RoundButton)`
-  background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
-  color: ${({ theme }) => theme.grayScaleColors.offWhite};
-  &:hover {
-    background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
-  }
-`;
+// const SelectedItemButton = styled(RoundButton)`
+//   background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
+//   color: ${({ theme }) => theme.grayScaleColors.offWhite};
+//   &:hover {
+//     background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
+//   }
+// `;
 
 const NextButton = styled(RoundButton)`
   border-radius: 12px;

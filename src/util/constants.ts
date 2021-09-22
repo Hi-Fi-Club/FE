@@ -2,6 +2,8 @@ export const ROUTE = {
   ENTER: "/",
   LOGIN: "/login",
   MAIN: "/main",
-  INTEREST: "/interest",
-  LOCATION: "/location",
+  USER: {
+    INTEREST: "/user/interest",
+    LOCATION: "/user/location",
+  },
 };

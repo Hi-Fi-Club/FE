@@ -1,25 +1,23 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import RoundButton from "components/Common/Buttons/RoundButton";
-interface ResultProp {
-  location: string;
-  targetLocations: string[];
-  setTargetLocations: Dispatch<SetStateAction<string[]>>;
-}
+import RoundButton from "./RoundButton";
 
-const TargetButton = ({ location, targetLocations, setTargetLocations }: ResultProp) => {
+type TTargetButtonProps = {
+  displayName: string;
+  onDeleteItemClick: (e : React.MouseEvent | MouseEvent) => void,
+  // items: string[];
+  // setItems: Dispatch<SetStateAction<string[]>>;
+};
+
+const TargetButton = ({ displayName, onDeleteItemClick }: TTargetButtonProps) => {
   const [isHoverState, setHoverState] = useState(false);
-  const handleHover = () => {
-    setHoverState((prev) => !prev);
-  };
 
-  const handleDelete = (location: string) => {
-    setTargetLocations(targetLocations.filter((target) => target !== location));
-  };
+  const handleHover = () => setHoverState((prev) => !prev);
+
   return (
     <HoverActive onMouseEnter={handleHover} onMouseLeave={handleHover}>
-      <SelectedItemButton disableRipple={true}>{location}</SelectedItemButton>
-      <DeleteButton isHoverState={isHoverState} onClick={() => handleDelete(location)}>
+      <SelectedItemButton disableRipple={true}>{displayName}</SelectedItemButton>
+      <DeleteButton isHoverState={isHoverState} onClick={onDeleteItemClick}>
         ×
       </DeleteButton>
     </HoverActive>
@@ -38,7 +36,6 @@ const DeleteButton = styled.button<Delete>`
   left: -8px;
 `;
 const SelectedItemButton = styled(RoundButton)`
-  // 중복 (관심사 페이지)
   background-color: ${({ theme }) => theme.grayScaleColors.titleActive};
   color: ${({ theme }) => theme.grayScaleColors.offWhite};
   &:hover {
