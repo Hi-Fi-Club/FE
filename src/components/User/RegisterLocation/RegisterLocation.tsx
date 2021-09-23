@@ -42,17 +42,18 @@ const RegisterLocation = () => {
   const handleTargetLocation = (region: string) => {
     //이미 포함된 것은 제외시킴
     if (searchLogs.includes(region)) return;
-    //동일한 동명이 존재하는 경우
-    searchLogs.filter((log) => new RegExp(dongName(region)).test(log)).length > 0
-      ? setSameDong(true)
-      : setSameDong(false);
     //태그2개이상선택시 return
     if (searchLogs.length > 1) {
       setCountGuide(true);
       setLocationResult([]);
       return;
     }
+    //동일한 동명이 존재하는 경우
+    searchLogs.filter((log) => new RegExp(dongName(region)).test(log)).length > 0
+      ? setSameDong(true)
+      : setSameDong(false);
 
+    setCountGuide(false);
     setSearchLogs((prev) => prev.concat([region]));
   };
 
