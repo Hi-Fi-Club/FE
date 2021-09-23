@@ -6,7 +6,8 @@
       "components/*": ["src/components/*"],
       "pages/*": ["src/pages/*"],
       "util/*": ["src/util/*"],
-      "assets/*": ["src/assets/*"]
+      "assets/*": ["src/assets/*"],
+      "hooks/*": ["src/hooks/*"]
     }
   }
 }
