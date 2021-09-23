@@ -50,8 +50,7 @@ const DeleteButton = styled.button`
   margin: 0;
 
   position: absolute;
-  color: ${({ theme }) => theme.colors.error};
-  font-size: 0.8em;
-  right: 3px;
-  top: 2.5px;
+  font-size: 0.7em;
+  right: -6.6px;
+  top: -3.5px;
 `;
