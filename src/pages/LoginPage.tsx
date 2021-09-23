@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import { ReactComponent as Line } from "assets/images/Line_2.svg";
+import API from "util/API";
 
 const LoginPage = () => {
   return (
     <LoginPageLayout>
       <ContentsWrapper>
         <Logo />
-        <span>
-          <Line /> Login with Service Account <Line />
-        </span>
-        <LoginKakao />
+        <Line /> Login with Service Account <Line />
+        <a href={API.kakaoOauthLogin()}>
+          <LoginKakao />
+        </a>
       </ContentsWrapper>
     </LoginPageLayout>
   );
