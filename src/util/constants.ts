@@ -6,4 +6,6 @@ export const ROUTE = {
     INTEREST: "/user/interest",
     LOCATION: "/user/location",
   },
+  OAUTH_LOGIN: "/oauth/kakao/callback",
+  OAUTH_LOGOUT: "/oauth/kakao/logout",
 };
