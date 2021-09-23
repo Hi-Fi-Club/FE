@@ -23,6 +23,7 @@ const Header = () => {
   }, []);
 
   const onLogOut = () => {
+    // fetch GET from API.logout() with Bearer JWT
     localStorage.removeItem("user");
     window.location.replace(location.pathname);
   };
