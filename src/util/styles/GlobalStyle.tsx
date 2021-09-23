@@ -14,12 +14,10 @@ import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
-  
 	* {
     box-sizing: border-box;
-    
   }
-  
+
   body {
     font-family:'Nunito_Regular';
     font-size: 18px;
@@ -43,50 +41,50 @@ const GlobalStyle = createGlobalStyle`
   }
 
   @font-face {
-    font-family: 'Nunito_Black';	
-    src: local('Nunito_Black'),    
+    font-family: 'Nunito_Black';
+    src: local('Nunito_Black'),
     url(${Nunito_Black})format('woff');
   }
 
   @font-face {
-    font-family: 'Nunito_ExtraBold';	
-    src: local('Nunito_ExtraBold'),    
+    font-family: 'Nunito_ExtraBold';
+    src: local('Nunito_ExtraBold'),
     url(${Nunito_ExtraBold})format('woff');
   }
 
   @font-face {
-    font-family: 'Nunito_Bold';	
-    src: local('Nunito_Bold'),    
+    font-family: 'Nunito_Bold';
+    src: local('Nunito_Bold'),
     url(${Nunito_Bold})format('woff');
   }
 
   @font-face {
-    font-family: 'Nunito_SemiBold';	
-    src: local('Nunito_SemiBold'),    
+    font-family: 'Nunito_SemiBold';
+    src: local('Nunito_SemiBold'),
     url(${Nunito_SemiBold})format('woff');
   }
 
   @font-face {
-    font-family: 'Nunito_Regular';	
-    src: local('Nunito_Regular'),    
+    font-family: 'Nunito_Regular';
+    src: local('Nunito_Regular'),
     url(${Nunito_Regular})format('woff');
   }
 
   @font-face {
-    font-family: 'Nunito_Light';	
-    src: local('Nunito_Light'),    
+    font-family: 'Nunito_Light';
+    src: local('Nunito_Light'),
     url(${Nunito_Light})format('woff');
   }
 
   @font-face {
-    font-family: 'Nunito_ExtraLight';	
-    src: local('Nunito_ExtraLight'),    
+    font-family: 'Nunito_ExtraLight';
+    src: local('Nunito_ExtraLight'),
     url(${Nunito_ExtraLight})format('woff');
   }
 
   @font-face {
-    font-family: 'Nunito_ExtraBoldItalic';	
-    src: local('Nunito_ExtraBoldItalic'),    
+    font-family: 'Nunito_ExtraBoldItalic';
+    src: local('Nunito_ExtraBoldItalic'),
     url(${Nunito_ExtraBoldItalic})format('woff');
   }
 `;

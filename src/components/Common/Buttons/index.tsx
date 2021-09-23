@@ -1,3 +1,5 @@
+import BlueButton from "./BlueButton";
 import RoundButton from "./RoundButton";
+import TargetButton from "./TargetButton";
 
-export { RoundButton };
+export { BlueButton, RoundButton, TargetButton };

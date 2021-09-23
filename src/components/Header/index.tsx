@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import RoundButton from "components/Common/Buttons/RoundButton";
 import { ROUTE } from "util/constants";
+import { isLogin } from "util/funcs";
+import API from "@/util/API";
 
 const Header = () => {
-  const { ENTER, LOGIN } = ROUTE;
+  const isLogined = isLogin();
   const location = useLocation();
+  const { ENTER, LOGIN } = ROUTE;
   const [isHeaderTop, setHeaderTop] = useState(true);
 
   // 나중에 디바운서 or 쓰로틀링
@@ -17,7 +20,13 @@ const Header = () => {
     if (location.pathname !== ENTER) return;
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname, ENTER]);
+
+  const onLogOut = () => {
+    // fetch GET from API.logout() with Bearer JWT
+    localStorage.removeItem("user");
+    window.location.replace(location.pathname);
+  };
 
   return (
     <HeaderLayout isHeaderTop={isHeaderTop}>
@@ -26,9 +35,15 @@ const Header = () => {
       </Link>
       {location.pathname === ENTER && ( //로그인상태조건반영 + SIGNOUT
         <ButtonContainer>
-          <Link to={LOGIN}>
-            <LoginButton>Sign In</LoginButton>
-          </Link>
+          {isLogined ? (
+            <a href={API.kakaoOauthLogout()}>
+              <LoginButton onClick={onLogOut}>Sign Out</LoginButton>
+            </a>
+          ) : (
+            <Link to={LOGIN}>
+              <LoginButton>Sign In</LoginButton>
+            </Link>
+          )}
         </ButtonContainer>
       )}
     </HeaderLayout>

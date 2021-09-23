@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css } from "styled-components";
 
 const maxWidth540 = css`
   @media (min-width: 576px) {
@@ -30,4 +30,4 @@ const maxWidth1320 = css`
   }
 `;
 
-export { maxWidth540, maxWidth720, maxWidth960, maxWidth1140, maxWidth1320};
+export { maxWidth540, maxWidth720, maxWidth960, maxWidth1140, maxWidth1320 };
