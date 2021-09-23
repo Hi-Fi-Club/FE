@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import { Container } from "@material-ui/core";
-import useInput from "@/hooks/useInput";
+import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import RoundButton from "components/Common/Buttons/RoundButton";
-import TargetButton from "./TargetButton";
+
+import useInput from "@/hooks/useInput";
+import { RoundButton, TargetButton } from "components/Common/Buttons";
 import { ROUTE } from "util/constants";
+
 type Address = {
   [key: string]: string;
 };
@@ -19,6 +19,7 @@ interface LocationResult {
   x: string;
   y: string;
 }
+
 const RegisterLocation = () => {
   const history = useHistory();
   const [locationInput, onChangeLocation, setLocationInput] = useInput("");
@@ -45,6 +46,10 @@ const RegisterLocation = () => {
     } //태그2개이상선택시 return
 
     setTargetLocations((prev) => prev.concat([dongName]));
+  };
+
+  const handleDeleteTarget = (location: string) => () => {
+    setTargetLocations(targetLocations.filter((target) => target !== location));
   };
 
   const handleNextPage = () => {
@@ -96,9 +101,8 @@ const RegisterLocation = () => {
             {targetLocations.map((location, idx) => (
               <TargetButton
                 key={idx}
-                location={location}
-                targetLocations={targetLocations}
-                setTargetLocations={setTargetLocations}
+                displayName={location}
+                onDeleteItemClick={handleDeleteTarget(location)}
               />
             ))}
           </ButtonBox>
