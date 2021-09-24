@@ -26,7 +26,8 @@ const RegisterLocation = () => {
   const [countGuide, setCountGuide] = useState(false);
   const [locationResult, setLocationResult] = useState<LocationResult[]>([]);
   const [targetLocations, setTargetLocations] = useState<string[]>([]);
-
+  const [searchLogs, setSearchLogs] = useState<string[]>([]);
+  const [isSameDong, setSameDong] = useState(false);
   const handleSubmitLocation = async () => {
     const hostURL = `http://dapi.kakao.com/v2/local/search/address.json?query=${locationInput}`;
     const REST_API_KEY = `95a473cfb21c6a0fee070ac4328bb2b3`;
@@ -36,24 +37,32 @@ const RegisterLocation = () => {
     setLocationInput("");
   };
 
+  const dongName = (region: string) => region.split(" ").reverse()[0];
+  const cityName = (region: string) => region.split(" ").reverse()[1];
   const handleTargetLocation = (region: string) => {
-    const dongName = region.split(" ").reverse()[0];
-    if (targetLocations.includes(dongName)) return; //이미 포함된 것은 제외시킴
-    if (targetLocations.length > 1) {
+    //이미 포함된 것은 제외시킴
+    if (searchLogs.includes(region)) return;
+    //태그2개이상선택시 return
+    if (searchLogs.length > 1) {
       setCountGuide(true);
       setLocationResult([]);
       return;
-    } //태그2개이상선택시 return
+    }
+    //동일한 동명이 존재하는 경우
+    searchLogs.filter((log) => new RegExp(dongName(region)).test(log)).length > 0
+      ? setSameDong(true)
+      : setSameDong(false);
 
-    setTargetLocations((prev) => prev.concat([dongName]));
+    setCountGuide(false);
+    setSearchLogs((prev) => prev.concat([region]));
   };
 
   const handleDeleteTarget = (location: string) => () => {
-    setTargetLocations(targetLocations.filter((target) => target !== location));
+    setSearchLogs((prev) => prev.filter((target) => target !== location));
   };
 
   const handleNextPage = () => {
-    if (targetLocations.length !== 2) return;
+    if (searchLogs.length !== 2) return;
     history.push(ROUTE.MAIN);
   };
 
@@ -88,7 +97,7 @@ const RegisterLocation = () => {
                 {locationResult.map((location, idx) => (
                   <li
                     key={idx}
-                    onClick={() => handleTargetLocation(location.address_name)}
+                    onClick={() => handleTargetLocation(location?.address_name)}
                   >{`•  ${location?.address_name}`}</li>
                 ))}
               </ul>
@@ -98,17 +107,25 @@ const RegisterLocation = () => {
 
         <LocationBox>
           <ButtonBox>
-            {targetLocations.map((location, idx) => (
-              <TargetButton
-                key={idx}
-                displayName={location}
-                onDeleteItemClick={handleDeleteTarget(location)}
-              />
-            ))}
+            {searchLogs.map((location, idx) =>
+              !isSameDong ? (
+                <TargetButton
+                  key={idx}
+                  displayName={dongName(location)}
+                  onDeleteItemClick={handleDeleteTarget(location)}
+                />
+              ) : (
+                <TargetButton
+                  key={idx}
+                  displayName={cityName(location) + " " + dongName(location)}
+                  onDeleteItemClick={handleDeleteTarget(location)}
+                />
+              ),
+            )}
           </ButtonBox>
 
           <NextButton onClick={handleNextPage} variant="outlined">
-            다음 ({targetLocations.length}/2)
+            다음 ({searchLogs.length}/2)
           </NextButton>
         </LocationBox>
       </LocationRow>
@@ -131,7 +148,6 @@ const LocationRow = styled.div`
   height: fit-content;
   top: 25%;
   margin: 0 auto;
-
   display: grid;
   row-gap: 20px;
 `;
@@ -148,7 +164,6 @@ const LocationHelpBox = styled(LocationBox)`
   align-items: flex-start;
   color: ${({ theme }) => theme.colors.basicBlue};
   font-size: 16px;
-
   li {
     cursor: pointer;
     font-size: 14px;
