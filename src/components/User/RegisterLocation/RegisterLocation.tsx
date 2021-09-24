@@ -6,7 +6,8 @@ import { FiSearch } from "react-icons/fi";
 
 import useInput from "@/hooks/useInput";
 import { RoundButton, TargetButton } from "components/Common/Buttons";
-import { ROUTE } from "util/constants";
+import { ROUTE, REST_API_KEY } from "util/constants";
+import API from "util/API";
 
 type Address = {
   [key: string]: string;
@@ -25,20 +26,21 @@ const RegisterLocation = () => {
   const [locationInput, onChangeLocation, setLocationInput] = useInput("");
   const [countGuide, setCountGuide] = useState(false);
   const [locationResult, setLocationResult] = useState<LocationResult[]>([]);
-  const [targetLocations, setTargetLocations] = useState<string[]>([]);
   const [searchLogs, setSearchLogs] = useState<string[]>([]);
   const [isSameDong, setSameDong] = useState(false);
   const handleSubmitLocation = async () => {
-    const hostURL = `http://dapi.kakao.com/v2/local/search/address.json?query=${locationInput}`;
-    const REST_API_KEY = `95a473cfb21c6a0fee070ac4328bb2b3`;
+    const hostURL = API.userLocation(locationInput);
     const header = { headers: { Authorization: `KakaoAK ${REST_API_KEY}` } };
     const result = await fetch(hostURL, header).then((res) => res.json());
     setLocationResult(result.documents);
     setLocationInput("");
   };
 
-  const dongName = (region: string) => region.split(" ").reverse()[0];
-  const cityName = (region: string) => region.split(" ").reverse()[1];
+  const getLocationName = (location: string) => {
+    const parseLocation = location.split(" ").reverse();
+    return { cityName: parseLocation[1], dongName: parseLocation[0] };
+  };
+
   const handleTargetLocation = (region: string) => {
     //이미 포함된 것은 제외시킴
     if (searchLogs.includes(region)) return;
@@ -49,7 +51,7 @@ const RegisterLocation = () => {
       return;
     }
     //동일한 동명이 존재하는 경우
-    searchLogs.filter((log) => new RegExp(dongName(region)).test(log)).length > 0
+    searchLogs.filter((log) => new RegExp(getLocationName(region).dongName).test(log)).length > 0
       ? setSameDong(true)
       : setSameDong(false);
 
@@ -107,21 +109,18 @@ const RegisterLocation = () => {
 
         <LocationBox>
           <ButtonBox>
-            {searchLogs.map((location, idx) =>
-              !isSameDong ? (
-                <TargetButton
-                  key={idx}
-                  displayName={dongName(location)}
-                  onDeleteItemClick={handleDeleteTarget(location)}
-                />
+            {searchLogs.map((location, idx) => {
+              const { cityName, dongName } = getLocationName(location);
+              return !isSameDong ? (
+                <TargetButton key={idx} displayName={dongName} onDeleteItemClick={handleDeleteTarget(location)} />
               ) : (
                 <TargetButton
                   key={idx}
-                  displayName={cityName(location) + " " + dongName(location)}
+                  displayName={cityName + " " + dongName}
                   onDeleteItemClick={handleDeleteTarget(location)}
                 />
-              ),
-            )}
+              );
+            })}
           </ButtonBox>
 
           <NextButton onClick={handleNextPage} variant="outlined">
