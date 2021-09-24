@@ -18,6 +18,10 @@ const API = {
     // GET with <Bearer jwt> into header
     return `http://ec2-15-164-119-79.ap-northeast-2.compute.amazonaws.com/api/logout/kakao`;
   },
+
+  userLocation(locationInput: string) {
+    return `http://dapi.kakao.com/v2/local/search/address.json?query=${locationInput}`;
+  },
 };
 
 export default API;
