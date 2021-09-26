@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { Container } from "@material-ui/core";
 import { useHistory } from "react-router";
@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 import { RoundButton, TargetButton } from "components/Common/Buttons";
 import { intersetData } from "util/mockData";
 import { ROUTE } from "util/constants";
-
+import { getMainInterests } from 'util/dataFetching/userInfo'
 type TSelectItem = {
   mainIdx: number;
   subIdx: number;
@@ -22,6 +22,7 @@ const INIT_INDEX = -1;
 const MAX_SELECT_NUM = 5;
 
 const RegisterInterest = () => {
+  
   const history = useHistory();
   const [selectedInfo, setSelectedInfo] = useState<TSelectedInfo>({
     selectedMainIdx: INIT_INDEX,
@@ -83,6 +84,9 @@ const RegisterInterest = () => {
     isMax && history.push(ROUTE.USER.LOCATION);
   };
 
+  useEffect(() => {}, []);
+  const interestsMain = getMainInterests()
+  console.log(interestsMain)
   const mainCategoryBtns = useMemo(
     () =>
       intersetData.map(({ value, id }) => (
@@ -219,7 +223,7 @@ const NextButton = styled(RoundButton)<TNextButton>`
   margin: 8px 0;
   background-color: ${({ selected }) => (selected ? `transparent` : `rgba(0, 0, 0, 0.04)`)};
   user-select: ${({ selected }) => (selected ? `auto` : `none`)};
-  pointer-events: ${({ selected }) => (selected ? `auto` : `none`)};;
+  pointer-events: ${({ selected }) => (selected ? `auto` : `none`)}; ;
 `;
 
 const SeparatedLine = styled.div`

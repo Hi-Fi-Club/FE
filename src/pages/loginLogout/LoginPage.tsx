@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as Line } from "assets/images/Line_2.svg";
-import API from "util/API";
+import API from "util/dataFetching/API";
 
 const LoginPage = () => {
   return (
@@ -23,7 +23,6 @@ const ContentsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 200px;
-
   span {
     font-size: 20px;
     font-family: "Nunito_Bold";
