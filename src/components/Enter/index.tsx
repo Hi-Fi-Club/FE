@@ -14,8 +14,9 @@ const Enter = () => {
   //페이지로 옮깁시다...
   //Go To Service__여기서 하는게 아닌거 같음,(로그인 유도로 변경 및 삭제)
   const isLogined = isLogin(); //useMemo를 쓰는게 맞을까?
-
+ 
   useEffect(()=>{
+    //유저정보확인절차 => MAIN / USERiNFO
     if(isLogined) history.push(ROUTE.MAIN)
   },[isLogined])
 

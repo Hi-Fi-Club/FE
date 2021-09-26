@@ -6,7 +6,21 @@ export const getUsesrInfo = async()=>{
 }
 
 export const getMainInterests = async() =>{
-	const response = await API.USERINFO.MAIN_INTERESTS()
+	
+const token = localStorage.getItem('jwt')
+console.log(token)
+// console.log("이거", JSON.stringify(token).replace(/\"/g,""))
+
+
+	const header = {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	const response = await fetch(API.USERINFO.MAIN_INTERESTS(), header)
+
 	console.log(response) //응답이 잘못된것 같음
 	return response
 }
