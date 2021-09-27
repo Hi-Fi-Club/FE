@@ -1,8 +1,6 @@
-import { useMemo, useState, useEffect } from "react";
-import styled, { css } from "styled-components";
-import { Container } from "@material-ui/core";
-import { useHistory } from "react-router";
+import { useState } from "react";
 
+<<<<<<< HEAD
 import { RoundButton, TargetButton } from "components/Common/Buttons";
 import { ROUTE } from "util/constants";
 import { getMainInterests, getDetailInterests } from "util/dataFetching/userInfo";
@@ -35,12 +33,22 @@ const MAX_SELECT_NUM = 5;
 const RegisterInterest = () => {
   const history = useHistory();
   const [interestInfo, setInterestInfo] = useState<interestInfo>({ main: [], detail: [] });
+=======
+import InterestSelectBox from "./InterestSelectBox";
+import InterestSelectResultBox from "./InterestSelectResultBox";
+import { TSelectedInfo } from "./type";
+import * as S from "./style";
+import { INIT_INDEX } from "./const";
+
+const RegisterInterest = () => {
+>>>>>>> 91bebce ([#43] refactor : RegisterInterest 관련 컴포넌트 리팩토링 중)
   const [selectedInfo, setSelectedInfo] = useState<TSelectedInfo>({
     selectedMainIdx: INIT_INDEX,
     isMax: false,
     items: [],
   });
 
+<<<<<<< HEAD
   // 관심사 5개 선택한 후 주변 장소 설정 페이지로 이동
   const handleNextButtonClick = (e: React.MouseEvent | MouseEvent) => {
     const { isMax, items } = selectedInfo;
@@ -142,103 +150,21 @@ const RegisterInterest = () => {
           )}
         </InterestBox>
       </InterestRow>
+=======
+  return (
+    <S.InterestLayout>
+      <S.InterestRow>
+        <InterestSelectBox {...{ selectedInfo, setSelectedInfo }} />
+      </S.InterestRow>
+>>>>>>> 91bebce ([#43] refactor : RegisterInterest 관련 컴포넌트 리팩토링 중)
 
       {selectedInfo.items.length > 0 && (
-        <InterestResultRow>
-          <InterestBox>
-            <SeparatedLine />
-            <ButtonBox>
-              {selectedInfo.items.map(({ mainIdx, subIdx, value }) => (
-                <TargetButton
-                  key={`${mainIdx}|${subIdx}`}
-                  displayName={value || ""}
-                  onDeleteItemClick={handleSelectedItemBtnClick(`${mainIdx}|${subIdx}`)}
-                />
-              ))}
-            </ButtonBox>
-            <NextButton
-              variant="outlined"
-              onClick={handleNextButtonClick}
-              disableRipple={!selectedInfo.isMax}
-              selected={selectedInfo.isMax}
-            >
-              다음 {`(${selectedInfo.items.length} / ${MAX_SELECT_NUM})`}
-            </NextButton>
-          </InterestBox>
-        </InterestResultRow>
+        <S.InterestResultRow>
+          <InterestSelectResultBox {...{ selectedInfo, setSelectedInfo }} />
+        </S.InterestResultRow>
       )}
-    </RegisterInterestLayout>
+    </S.InterestLayout>
   );
 };
 
 export default RegisterInterest;
-
-type TCategoryType = "main" | "sub";
-type TInterestButton = {
-  selected?: boolean;
-  category?: TCategoryType;
-};
-type TNextButton = Pick<TInterestButton, "selected">;
-
-const RegisterInterestLayout = styled(Container)`
-  padding-top: 64px;
-  position: relative;
-  height: calc(90vh - 64px);
-
-  display: grid;
-  grid-template-rows: 40%;
-`;
-
-const InterestRow = styled.div`
-  position: relative;
-  height: fit-content;
-  top: 25%;
-`;
-
-const InterestResultRow = styled(InterestRow)`
-  flex-direction: row;
-  top: 20%;
-`;
-
-const InterestBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  row-gap: 4px;
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-`;
-
-const InterestButton = styled(RoundButton)<TInterestButton>`
-  ${({ selected }) =>
-    selected &&
-    css`
-      background-color: #5cbdfa;
-      color: ${({ theme }) => theme.grayScaleColors.offWhite};
-      &:hover {
-        background-color: #79c6f6;
-      }
-    `};
-`;
-
-const NextButton = styled(RoundButton)<TNextButton>`
-  border-radius: 12px;
-  margin: 8px 0;
-  background-color: ${({ selected }) => (selected ? `transparent` : `rgba(0, 0, 0, 0.04)`)};
-  user-select: ${({ selected }) => (selected ? `auto` : `none`)};
-  pointer-events: ${({ selected }) => (selected ? `auto` : `none`)}; ;
-`;
-
-const SeparatedLine = styled.div`
-  width: 100%;
-  height: 1px;
-  margin: 4px 0;
-  box-shadow: 0 0.4px 0.4px ${({ theme }) => theme.grayScaleColors.placeHolder};
-`;
