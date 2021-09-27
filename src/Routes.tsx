@@ -3,8 +3,8 @@ import { EnterPage, LoginPage, MainPage, RegisterInterestPage, RegisterLocationP
 import { Route, Redirect, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "components/Header";
 import { ROUTE } from "util/constants";
-import LoginLoadingPage from "pages/loginLogout/LoginLoadingPage";
-import LogoutLoadingPage from "pages/loginLogout/LogoutLoadingPage";
+import LoginLoadingPage from "pages/auth/LoginLoadingPage";
+import LogoutLoadingPage from "pages/auth/LogoutLoadingPage";
 import { isLogin } from "util/funcs";
 const Routes = () => {
   const { ENTER, LOGIN, MAIN, USER, OAUTH_LOGIN, OAUTH_LOGOUT } = ROUTE;

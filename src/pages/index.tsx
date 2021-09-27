@@ -1,6 +1,6 @@
 // pages : index
 import EnterPage from './EnterPage';
-import LoginPage from './loginLogout/LoginPage';
+import LoginPage from './auth/LoginPage';
 import RegisterInterestPage from './user/RegisterInterestPage';
 import RegisterLocationPage from './user/RegisterLocationPage';
 import HostRegistrationPage from './HostRegistrationPage';
