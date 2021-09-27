@@ -1,6 +1,6 @@
 // Responsive Container
 import styled from 'styled-components';
-import { TChildren } from 'util/types';
+import { TChildren } from "@/util/types";
 import { isUndefined } from '@/util/funcs';
 import {
   maxWidth540,
@@ -11,12 +11,12 @@ import {
 } from './mediaQueries';
 
 export type TContainerType = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-interface IResponsiveContainer {
+type TResponsiveContainer = {
   type?: TContainerType;
   children?: TChildren;
 }
 
-const ResponsiveContainer = ({ type, children, ...props }: IResponsiveContainer) => (
+const ResponsiveContainer = ({ type, children, ...props }: TResponsiveContainer) => (
   <ResponsiveContainerLayout type={type || "sm"} {...props}>{children || {}}</ResponsiveContainerLayout>
 );
 
