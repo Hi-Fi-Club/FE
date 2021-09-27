@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { RoundButton, TRoundButton } from "../Common";
+import { RoundButton, TRoundButton } from "..";
 
 type TRegisterButton = {
   selected?: boolean;
