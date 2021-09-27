@@ -1,45 +1,31 @@
 import { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ROUTE } from "util/constants";
-import API from "@/util/dataFetching/API";
+import { getTokenAndUserInfo } from "util/dataFetching/auth";
+interface getTokenReturn {
+  jwtToken: string;
+  userInfo: any;
+}
 
 const LoginLoadingPage = () => {
-  const history = useHistory()
-  const getToken = async () => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code")
-
-    try {
-      const response = await fetch(API.login(), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code }),
-      });
-      const login = await response.json();
-      console.log(login)
-      if (!login.jwtToken) throw login;
-      localStorage.setItem("jwt",login.jwtToken);
-
-      (login.userInterests)?history.push(ROUTE.MAIN):history.push(ROUTE.USER.INTEREST) 
-      //jwt를 통해 user정보만 받는 API필요. 현재없음 => 회원정보를 로컬 또는 전역상태관리해야하는 상황 또는 JWT유무로 로그인을 확인하지 않고, 모든 신상정보 등록한 후에 JWT등록 또는 로그인완료상태 등록해주기
-
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const history = useHistory();
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+  const [tokenUser, setTokenUser] = useState<getTokenReturn | null>();
+  useEffect(() => {
+    (async () => {
+      const response = await getTokenAndUserInfo(code);
+      setTokenUser(response);
+    })();
+  }, [code]);
 
   useEffect(() => {
-    getToken();
-  }, []);
+    if (!tokenUser) return;
+    localStorage.setItem("jwt", tokenUser?.jwtToken);
+    tokenUser?.userInfo ? history.push(ROUTE.MAIN) : history.push(ROUTE.USER.INTEREST);
+  }, [tokenUser]);
 
-  return (
-    <>
-      <div>'..Loading..'</div>
-   
-    </>
-  );
+  return <div>'..Loading..'</div>;
 };
 
 export default LoginLoadingPage;
