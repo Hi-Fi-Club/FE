@@ -2,7 +2,7 @@ import { ThemeProvider } from "styled-components";
 import { StylesProvider } from "@material-ui/core/styles";
 import GlobalStyle from "./util/styles/GlobalStyle";
 import theme from "./util/styles/theme";
-import Routes from "./components/Routes";
+import Routes from "./Router";
 
 const App = () => {
   return (
