@@ -2,7 +2,7 @@ import { useMemo, useCallback } from "react";
 
 import * as S from "./style";
 import { INIT_INDEX, MAX_SELECT_NUM } from "./const";
-import RegisterButton from "../RegisterButton";
+import RegisterButton from "components/Common/Buttons/RegisterButton";
 import { intersetData } from "util/mockData";
 import { TInterestSelectProps } from "./type";
 
