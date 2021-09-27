@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import RoundButton from "components/Common/Buttons/RoundButton";
 import { ROUTE } from "util/constants";
 import { isLogin } from "util/funcs";
-import API from "@/util/API";
+import API from "@/util/dataFetching/API";
 
 const Header = () => {
   const isLogined = isLogin();

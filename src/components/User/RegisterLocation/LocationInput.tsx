@@ -3,7 +3,7 @@ import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import { REST_API_KEY } from "util/constants";
-import API from "util/API";
+import API from "util/dataFetching/API";
 type Address = {
   [key: string]: string;
 };
@@ -23,7 +23,7 @@ interface LocationInputProps {
 function LocationInput({ setLocationResult }: LocationInputProps) {
   const [locationInput, onChangeLocation, setLocationInput] = useInput("");
   const handleSubmitLocation = async () => {
-    const hostURL = API.userLocation(locationInput);
+    const hostURL = API.USERINFO.LOCATION(locationInput);
     const header = { headers: { Authorization: `KakaoAK ${REST_API_KEY}` } };
     const result = await fetch(hostURL, header).then((res) => res.json());
     setLocationResult(result.documents);

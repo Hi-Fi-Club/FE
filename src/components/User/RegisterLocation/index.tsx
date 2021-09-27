@@ -1,7 +1,9 @@
 import RegisterLocation from "./RegisterLocation";
+
 type Address = {
   [key: string]: string;
 };
+
 export interface LocationResult {
   address: Address;
   address_name: string;
