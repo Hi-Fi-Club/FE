@@ -1,13 +1,15 @@
-import { ROUTE } from 'util/constants'
-const clientURL = `http://localhost:3000`;
-const serverURL = `http://ec2-15-164-119-79.ap-northeast-2.compute.amazonaws.com/api`;
+import { ROUTE } from "util/constants";
+const clientURL = process.env.REACT_APP_CLIENT;
+const serverURL = process.env.REACT_APP_SERVER;
 const kakaoOauth = `https://kauth.kakao.com/oauth`;
 
 const API = {
   //AUTH: 로그인관련 대문자
   kakaoOauthLogin() {
     // GET
-    return `${kakaoOauth}/authorize?client_id=23782940861ed1c764f28841b9f83c80&redirect_uri=${clientURL+ROUTE.OAUTH_LOGIN}&response_type=code`;
+    return `${kakaoOauth}/authorize?client_id=23782940861ed1c764f28841b9f83c80&redirect_uri=${
+      clientURL + ROUTE.OAUTH_LOGIN
+    }&response_type=code`;
   },
   login() {
     // POST with code into body
@@ -15,7 +17,9 @@ const API = {
   },
   kakaoOauthLogout() {
     // GET
-    return `${kakaoOauth}/logout?client_id=23782940861ed1c764f28841b9f83c80&logout_redirect_uri=${clientURL+ROUTE.OAUTH_LOGOUT}`;
+    return `${kakaoOauth}/logout?client_id=23782940861ed1c764f28841b9f83c80&logout_redirect_uri=${
+      clientURL + ROUTE.OAUTH_LOGOUT
+    }`;
   },
   logout() {
     // GET with <Bearer jwt> into header
