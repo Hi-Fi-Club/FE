@@ -12,11 +12,13 @@ const LoginLoadingPage = () => {
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
   const [tokenUser, setTokenUser] = useState<getTokenReturn | null>();
+  const fetchTokenAndUserInfo = async () => {
+    const response = await getTokenAndUserInfo(code);
+    setTokenUser(response);
+  };
+
   useEffect(() => {
-    (async () => {
-      const response = await getTokenAndUserInfo(code);
-      setTokenUser(response);
-    })();
+    fetchTokenAndUserInfo();
   }, [code]);
 
   useEffect(() => {
