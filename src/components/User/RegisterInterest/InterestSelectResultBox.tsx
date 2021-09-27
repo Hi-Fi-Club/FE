@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { ROUTE } from "util/constants";
-import RegisterButton from "components/Common/Buttons/RegisterButton";
+import { RegisterButton } from "components/Common/Buttons";
 import { TargetButton } from "components/Common";
 
 import { TInterestSelectProps } from "./type";
