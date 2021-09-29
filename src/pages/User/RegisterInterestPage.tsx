@@ -1,8 +1,8 @@
 // 개인정보등록 : 관심사
 import { useState } from "react";
 import {
-  InterestSelectBox,
-  InterestSelectResultBox,
+  InterestSelect,
+  InterestSelectResult,
   TSelectedInfo,
   style as S,
   consts
@@ -20,12 +20,12 @@ const RegisterInterestPage = () => {
   return (
     <S.InterestLayout>
       <S.InterestRow>
-        <InterestSelectBox {...{ selectedInfo, setSelectedInfo }} />
+        <InterestSelect {...{ selectedInfo, setSelectedInfo }} />
       </S.InterestRow>
 
       {selectedInfo.items.length > 0 && (
         <S.InterestResultRow>
-          <InterestSelectResultBox {...{ selectedInfo, setSelectedInfo }} />
+          <InterestSelectResult {...{ selectedInfo, setSelectedInfo }} />
         </S.InterestResultRow>
       )}
     </S.InterestLayout>

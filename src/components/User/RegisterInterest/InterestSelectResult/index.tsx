@@ -3,11 +3,11 @@ import { ROUTE } from "util/constants";
 import { RegisterButton } from "components/Common/Buttons";
 import { TargetButton } from "components/Common";
 
-import { TInterestSelectProps } from "./type";
-import * as S from "./style";
-import { MAX_SELECT_NUM } from "./const";
+import { TInterestSelectProps } from "../type";
+import * as S from "../style";
+import { MAX_SELECT_NUM } from "../const";
 
-const InterestSelectResultBox = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSelectProps) => {
+const InterestSelectResult = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSelectProps) => {
   const history = useHistory();
 
   // 현재 선택한 관심사들에서 클릭한 관심사 제거
@@ -56,4 +56,4 @@ const InterestSelectResultBox = ({ selectedInfo, setSelectedInfo, ...props }: TI
   );
 };
 
-export default InterestSelectResultBox;
+export default InterestSelectResult;

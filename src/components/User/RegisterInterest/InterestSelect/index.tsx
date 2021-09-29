@@ -1,12 +1,12 @@
 import { useMemo, useCallback } from "react";
 
-import * as S from "./style";
-import { INIT_INDEX, MAX_SELECT_NUM } from "./const";
+import * as S from "../style";
+import { INIT_INDEX, MAX_SELECT_NUM } from "../const";
 import { RegisterButton } from "components/Common/Buttons";
 import { intersetData } from "util/mockData";
-import { TInterestSelectProps } from "./type";
+import { TInterestSelectProps } from "../type";
 
-const InterestSelectBox = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSelectProps) => {
+const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSelectProps) => {
   // 대분류 선택
   const handleInterestMainBtnClick = useCallback(
     (idx: number) => (e: React.MouseEvent | MouseEvent) =>
@@ -94,4 +94,4 @@ const InterestSelectBox = ({ selectedInfo, setSelectedInfo, ...props }: TInteres
   );
 };
 
-export default InterestSelectBox;
+export default InterestSelect;
