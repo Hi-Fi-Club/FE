@@ -16,4 +16,4 @@ type TInterestSelectProps = {
   setSelectedInfo: Dispatch<SetStateAction<TSelectedInfo>>;
 };
 
-export type { TSelectItem, TSelectedInfo, TInterestSelectProps };
+export type { TSelectedInfo, TInterestSelectProps };
