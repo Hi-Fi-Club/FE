@@ -1,11 +1,15 @@
 import { useHistory } from "react-router-dom";
-import { ROUTE } from "util/constants";
+import { ROUTE } from "@/util/constants";
 import { RegisterButton } from "components/Common/Buttons";
 import { TargetButton } from "components/Common";
 
 import { TInterestSelectProps } from "../type";
 import * as S from "../style";
-import { MAX_SELECT_NUM } from "../const";
+import { USER } from "util/constants";
+
+const {
+  RegisterInterest: { MAX_SELECT_NUM },
+} = USER;
 
 const InterestSelectResult = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSelectProps) => {
   const history = useHistory();

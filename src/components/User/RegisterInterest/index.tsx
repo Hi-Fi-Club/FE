@@ -1,9 +1,8 @@
-import InterestSelect from "./InterestSelect";
-import InterestSelectResult from "./InterestSelectResult";
+import SelectInterest from "./SelectInterest";
+import SelectInterestResult from "./SelectInterestResult";
 import { TInterestSelectProps, TSelectedInfo } from "./type";
 import * as style from "./style";
-import * as consts from "./const";
 
-export { InterestSelect, InterestSelectResult };
-export { style, consts };
+export { SelectInterest, SelectInterestResult };
+export { style };
 export type { TInterestSelectProps, TSelectedInfo };
