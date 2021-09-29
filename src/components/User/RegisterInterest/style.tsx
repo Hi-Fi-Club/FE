@@ -1,23 +1,19 @@
 import styled from "styled-components";
 
 const InterestLayout = styled.div`
-  padding-top: 64px;
   position: relative;
-  height: calc(90vh - 64px);
+  min-height: 100vh;
+  ${({ theme }) => theme.flexSet()}
 
-  display: grid;
-  grid-template-rows: 40%;
+  .interest__inner {
+    height: calc(100vh / 3);
+  }
 `;
 
 const InterestRow = styled.div`
   position: relative;
   height: fit-content;
-  top: 25%;
-`;
-
-const InterestResultRow = styled(InterestRow)`
-  flex-direction: row;
-  top: 20%;
+  padding: 3vh 0;
 `;
 
 const InterestBox = styled.div`
@@ -26,18 +22,12 @@ const InterestBox = styled.div`
 `;
 
 const ButtonBox = styled.div`
-  display: flex;
+  ${({ theme }) => theme.flexSet()}
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   gap: 4px;
+  & + & {
+    margin-top: 12px;
+  }
 `;
 
-const SeparatedLine = styled.div`
-  width: 100%;
-  height: 1px;
-  margin: 4px 0;
-  box-shadow: 0 0.4px 0.4px ${({ theme }) => theme.grayScaleColors.placeHolder};
-`;
-
-export { InterestLayout, InterestRow, InterestResultRow, InterestBox, ButtonBox, SeparatedLine };
+export { InterestLayout, InterestRow, InterestBox, ButtonBox };

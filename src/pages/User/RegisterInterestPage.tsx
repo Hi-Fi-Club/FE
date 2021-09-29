@@ -19,15 +19,17 @@ const RegisterInterestPage = () => {
 
   return (
     <S.InterestLayout>
-      <S.InterestRow>
-        <InterestSelect {...{ selectedInfo, setSelectedInfo }} />
-      </S.InterestRow>
+      <div className="interest__inner">
+        <S.InterestRow>
+          <InterestSelect {...{ selectedInfo, setSelectedInfo }} />
+        </S.InterestRow>
 
-      {selectedInfo.items.length > 0 && (
-        <S.InterestResultRow>
-          <InterestSelectResult {...{ selectedInfo, setSelectedInfo }} />
-        </S.InterestResultRow>
-      )}
+        {selectedInfo.items.length > 0 && (
+          <S.InterestRow>
+            <InterestSelectResult {...{ selectedInfo, setSelectedInfo }} />
+          </S.InterestRow>
+        )}
+      </div>
     </S.InterestLayout>
   );
 };

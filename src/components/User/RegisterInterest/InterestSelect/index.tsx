@@ -84,12 +84,7 @@ const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSe
       {/* ㅇㅇ에 추후 현재 로그인 계정의 이름 넣기 */}
       <span>ㅇㅇ님의 관심분야를 선택해주세요</span>
       {mainCategoryBtns.length > 0 && <S.ButtonBox>{mainCategoryBtns}</S.ButtonBox>}
-      {selectedInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && (
-        <>
-          <S.SeparatedLine />
-          <S.ButtonBox>{subCategoryBtns}</S.ButtonBox>
-        </>
-      )}
+      {selectedInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && <S.ButtonBox>{subCategoryBtns}</S.ButtonBox>}
     </S.InterestBox>
   );
 };
