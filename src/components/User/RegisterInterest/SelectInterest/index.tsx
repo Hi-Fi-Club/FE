@@ -1,10 +1,14 @@
 import { useMemo, useCallback } from "react";
 
 import * as S from "../style";
-import { INIT_INDEX, MAX_SELECT_NUM } from "../const";
 import { RegisterButton } from "components/Common/Buttons";
 import { intersetData } from "util/mockData";
+import { USER } from "util/constants";
 import { TInterestSelectProps } from "../type";
+
+const {
+  RegisterInterest: { MAX_SELECT_NUM, INIT_INDEX },
+} = USER;
 
 const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSelectProps) => {
   // 대분류 선택

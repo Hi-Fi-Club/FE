@@ -1,14 +1,12 @@
 // 개인정보등록 : 관심사
 import { useState } from "react";
-import {
-  InterestSelect,
-  InterestSelectResult,
-  TSelectedInfo,
-  style as S,
-  consts
-} from "components/User/RegisterInterest";
+import { SelectInterest, SelectInterestResult, TSelectedInfo } from "components/User/RegisterInterest";
+import { USER } from "@/util/constants";
+import * as S from './style';
 
-const { INIT_INDEX } = consts;
+const {
+  RegisterInterest: { INIT_INDEX },
+} = USER;
 
 const RegisterInterestPage = () => {
   const [selectedInfo, setSelectedInfo] = useState<TSelectedInfo>({
@@ -21,12 +19,12 @@ const RegisterInterestPage = () => {
     <S.InterestLayout>
       <div className="interest__inner">
         <S.InterestRow>
-          <InterestSelect {...{ selectedInfo, setSelectedInfo }} />
+          <SelectInterest {...{ selectedInfo, setSelectedInfo }} />
         </S.InterestRow>
 
         {selectedInfo.items.length > 0 && (
           <S.InterestRow>
-            <InterestSelectResult {...{ selectedInfo, setSelectedInfo }} />
+            <SelectInterestResult {...{ selectedInfo, setSelectedInfo }} />
           </S.InterestRow>
         )}
       </div>

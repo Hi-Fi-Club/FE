@@ -4,10 +4,6 @@ import Header from "components/Header";
 import { ROUTE } from "util/constants";
 import LoginLoadingPage from "pages/auth/LoginLoadingPage";
 import LogoutLoadingPage from "pages/auth/LogoutLoadingPage";
-<<<<<<< HEAD:src/Router.tsx
-=======
-import { isLogin } from "util/funcs";
->>>>>>> 91bebce ([#43] refactor : RegisterInterest 관련 컴포넌트 리팩토링 중):src/Routes.tsx
 const Routes = () => {
   const { ENTER, LOGIN, MAIN, USER, OAUTH_LOGIN, OAUTH_LOGOUT } = ROUTE;
 

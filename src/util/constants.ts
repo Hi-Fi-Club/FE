@@ -11,3 +11,5 @@ export const ROUTE = {
 };
 
 export const TARGET_COUNT = 2;
+export const INIT_INDEX = -1;
+export const MAX_SELECT_NUM = 5;
