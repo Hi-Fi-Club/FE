@@ -33,7 +33,6 @@ const InterestSelectResult = ({ selectedInfo, setSelectedInfo, ...props }: TInte
 
   return (
     <S.InterestBox>
-      <S.SeparatedLine />
       <S.ButtonBox>
         {selectedInfo.items.map(({ mainIdx, subIdx, value }) => (
           <TargetButton
