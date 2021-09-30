@@ -6,15 +6,17 @@ type TRoundButton = {
   variant?: "text" | "outlined" | "contained";
   color?: PropTypes.Color;
   disableRipple?: boolean;
+  className?: string;
   onClick?: (e: React.MouseEvent | MouseEvent) => void;
   children?: TChildren;
 };
 
-const RoundButton = ({ variant, color, disableRipple, onClick, children, ...props }: TRoundButton) => (
+const RoundButton = ({ variant, color, disableRipple, className, onClick, children, ...props }: TRoundButton) => (
   <RoundButtonLayout
     variant={variant || "contained"}
     color={color || "default"}
     disableRipple={disableRipple}
+    className={className}
     onClick={onClick}
     {...props}
   >

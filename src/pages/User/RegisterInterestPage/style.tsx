@@ -6,6 +6,10 @@ const InterestLayout = styled.div`
 
   .interest__inner {
     height: calc(100vh / 2);
+
+    ${({ theme: { media } }) => media.desktop} {
+      font-size: 1.2rem;
+    }
   }
 `;
 
