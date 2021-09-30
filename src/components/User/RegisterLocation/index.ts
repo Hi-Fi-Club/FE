@@ -1,8 +1,8 @@
 import LocationClickResult from "./LocationClickResult";
 import LocationInput from "./LocationInput";
 import LocationSearchResult from "./LocationSearchResult";
-
-export { LocationClickResult, LocationInput, LocationSearchResult };
+import LocationSubmit from "./LocationSubmit";
+export { LocationClickResult, LocationInput, LocationSearchResult, LocationSubmit };
 
 export const getLocationName = (location: string) => {
   const parseLocation = location.split(" ").reverse();
