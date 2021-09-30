@@ -3,7 +3,7 @@ import { ROUTE } from "@/util/constants";
 import { RegisterButton } from "components/Common/Buttons";
 import { TargetButton } from "components/Common";
 
-import { TInterestSelectProps } from "../type";
+import { TInterestSelectProps } from "@/util/types";
 import * as S from "../style";
 import { USER } from "util/constants";
 

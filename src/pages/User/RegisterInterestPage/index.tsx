@@ -1,7 +1,8 @@
 // 개인정보등록 : 관심사
 import { useState } from "react";
-import { SelectInterest, SelectInterestResult, TSelectedInfo } from "components/User/RegisterInterest";
+import { SelectInterest, SelectInterestResult } from "components/User/RegisterInterest";
 import { USER } from "@/util/constants";
+import { TSelectedInfo } from "@/util/types";
 import * as S from './style';
 
 const {
