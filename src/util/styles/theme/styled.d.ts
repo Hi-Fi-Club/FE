@@ -37,5 +37,10 @@ declare module "styled-components" {
       [device in TDevices]: string;
     };
     flexSet: (horizon?: string, vertical?: string, direction?: string) => FlattenSimpleInterpolation;
+
+    createResponse: ({ maxWidth: number, minWidth: number }) => string | null;
+    media: {
+      [device in TDevices]: string | null;
+    };
   }
 }

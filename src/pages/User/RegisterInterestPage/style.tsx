@@ -5,7 +5,7 @@ const InterestLayout = styled.div`
   ${({ theme }) => theme.flexSet()}
 
   .interest__inner {
-    height: calc(100vh / 3);
+    height: calc(100vh / 2);
   }
 `;
 

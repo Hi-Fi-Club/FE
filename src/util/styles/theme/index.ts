@@ -1,4 +1,5 @@
 import { DefaultTheme, css } from "styled-components";
+import { createResponse, media } from "./media";
 
 const theme: DefaultTheme = {
   colors: {
@@ -36,6 +37,8 @@ const theme: DefaultTheme = {
     align-items: ${vertical || "center"};
     flex-direction: ${direction || "row"};
   `,
+  createResponse,
+  media,
 };
 
 export default theme;
