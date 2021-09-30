@@ -10,7 +10,7 @@ type TTargetButtonProps = {
   // setItems: Dispatch<SetStateAction<string[]>>;
 };
 
-const TargetButton = ({ displayName, onDeleteItemClick }: TTargetButtonProps) => {
+const TargetButton = ({ displayName, onDeleteItemClick, ...props }: TTargetButtonProps) => {
   const [isHoverState, setHoverState] = useState(false);
 
   // const handleHover = () => setHoverState((prev) => !prev);
@@ -18,10 +18,10 @@ const TargetButton = ({ displayName, onDeleteItemClick }: TTargetButtonProps) =>
   const handleMouseLeave = () => isHoverState && setHoverState((prev) => !prev);
 
   return (
-    <TargetButtonLayout onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <SelectedItemButton disableRipple={true}>{displayName}</SelectedItemButton>
+    <TargetButtonLayout onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...props}>
+      <SelectedItemButton disableRipple={true} className="select">{displayName}</SelectedItemButton>
       {isHoverState && (
-        <DeleteButton onClick={onDeleteItemClick}>
+        <DeleteButton onClick={onDeleteItemClick} className="delete">
           <IoClose />
         </DeleteButton>
       )}
@@ -50,7 +50,7 @@ const DeleteButton = styled.button`
   margin: 0;
 
   position: absolute;
-  font-size: 0.7em;
+  font-size: 0.8rem;
   right: -6.6px;
   top: -3.5px;
 `;

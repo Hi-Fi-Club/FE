@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from "react";
 
-import * as S from "../style";
-import { RegisterButton } from "components/Common/Buttons";
+import * as S from "./style";
+
 import { intersetData } from "util/mockData";
 import { USER } from "util/constants";
 import { TInterestSelectProps } from "@/util/types";
@@ -28,13 +28,13 @@ const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSe
   const mainCategoryBtns = useMemo(
     () =>
       intersetData.map(({ value, id }) => (
-        <RegisterButton
+        <S.InterestButton
           key={id}
           selected={selectedInfo.selectedMainIdx === id}
           onClick={handleInterestMainBtnClick(id)}
         >
           {value}
-        </RegisterButton>
+        </S.InterestButton>
       )),
     [selectedInfo.selectedMainIdx, handleInterestMainBtnClick],
   );
@@ -76,9 +76,9 @@ const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSe
       const selectedSubItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === id);
       const currColor = selectedSubItem ? "primary" : "default";
       return (
-        <RegisterButton key={id} variant="outlined" color={currColor} onClick={handleInterestSubBtnClick(id)}>
+        <S.InterestButton key={id} variant="outlined" color={currColor} onClick={handleInterestSubBtnClick(id)}>
           {value}
-        </RegisterButton>
+        </S.InterestButton>
       );
     });
   }, [selectedInfo, handleInterestSubBtnClick]);
@@ -87,8 +87,10 @@ const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSe
     <S.InterestBox {...props}>
       {/* ㅇㅇ에 추후 현재 로그인 계정의 이름 넣기 */}
       <span>ㅇㅇ님의 관심분야를 선택해주세요</span>
-      {mainCategoryBtns.length > 0 && <S.ButtonBox>{mainCategoryBtns}</S.ButtonBox>}
-      {selectedInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && <S.ButtonBox>{subCategoryBtns}</S.ButtonBox>}
+      {mainCategoryBtns.length > 0 && <S.InteresButtonBox>{mainCategoryBtns}</S.InteresButtonBox>}
+      {selectedInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && (
+        <S.InteresButtonBox>{subCategoryBtns}</S.InteresButtonBox>
+      )}
     </S.InterestBox>
   );
 };

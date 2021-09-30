@@ -1,10 +1,8 @@
 import { useHistory } from "react-router-dom";
 import { ROUTE } from "@/util/constants";
-import { RegisterButton } from "components/Common/Buttons";
-import { TargetButton } from "components/Common";
 
 import { TInterestSelectProps } from "@/util/types";
-import * as S from "../style";
+import * as S from "./style";
 import { USER } from "util/constants";
 
 const {
@@ -36,17 +34,17 @@ const InterestSelectResult = ({ selectedInfo, setSelectedInfo, ...props }: TInte
   };
 
   return (
-    <S.InterestBox>
-      <S.ButtonBox>
+    <S.InterestBox {...props}>
+      <S.InteresButtonBox>
         {selectedInfo.items.map(({ mainIdx, subIdx, value }) => (
-          <TargetButton
+          <S.InterestTargetButton
             key={`${mainIdx}|${subIdx}`}
             displayName={value || ""}
             onDeleteItemClick={handleSelectedItemBtnClick(`${mainIdx}|${subIdx}`)}
           />
         ))}
-      </S.ButtonBox>
-      <RegisterButton
+      </S.InteresButtonBox>
+      <S.InterestButton
         mode="next"
         variant="outlined"
         onClick={handleNextButtonClick}
@@ -54,7 +52,7 @@ const InterestSelectResult = ({ selectedInfo, setSelectedInfo, ...props }: TInte
         selected={selectedInfo.isMax}
       >
         다음 {`(${selectedInfo.items.length} / ${MAX_SELECT_NUM})`}
-      </RegisterButton>
+      </S.InterestButton>
     </S.InterestBox>
   );
 };
