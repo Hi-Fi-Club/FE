@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
+// user - RegisterInterest
 type TSelectItem = {
   mainIdx: number;
   subIdx: number;

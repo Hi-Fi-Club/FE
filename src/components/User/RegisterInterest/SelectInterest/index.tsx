@@ -4,7 +4,7 @@ import * as S from "../style";
 import { RegisterButton } from "components/Common/Buttons";
 import { intersetData } from "util/mockData";
 import { USER } from "util/constants";
-import { TInterestSelectProps } from "../type";
+import { TInterestSelectProps } from "@/util/types";
 
 const {
   RegisterInterest: { MAX_SELECT_NUM, INIT_INDEX },
