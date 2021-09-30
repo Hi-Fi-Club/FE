@@ -6,8 +6,8 @@ import { useHistory } from "react-router";
 import { RoundButton, TargetButton } from "components/Common/Buttons";
 import { intersetData } from "util/mockData";
 import { ROUTE } from "util/constants";
-import { getMainInterests } from 'util/dataFetching/userInfo'
-type TSelectItem = {
+import { getMainInterests } from "util/dataFetching/userInfo";
+export type TSelectItem = {
   mainIdx: number;
   subIdx: number;
   value?: string;
@@ -18,12 +18,20 @@ type TSelectedInfo = {
   items: TSelectItem[];
 };
 
+interface mainProp {
+  id: number;
+  name: string;
+}
+interface interestInfo {
+  main: mainProp[];
+  detail: any;
+}
 const INIT_INDEX = -1;
 const MAX_SELECT_NUM = 5;
 
 const RegisterInterest = () => {
-  
   const history = useHistory();
+  const [interestInfo, setInterestInfo] = useState<interestInfo>({ main: [], detail: [] });
   const [selectedInfo, setSelectedInfo] = useState<TSelectedInfo>({
     selectedMainIdx: INIT_INDEX,
     isMax: false,
@@ -80,13 +88,25 @@ const RegisterInterest = () => {
 
   // 관심사 5개 선택한 후 주변 장소 설정 페이지로 이동
   const handleNextButtonClick = (e: React.MouseEvent | MouseEvent) => {
-    const { isMax } = selectedInfo;
-    isMax && history.push(ROUTE.USER.LOCATION);
+    const { isMax, items } = selectedInfo;
+    isMax && history.push({ pathname: ROUTE.USER.LOCATION, state: items });
   };
 
-  useEffect(() => {}, []);
-  const interestsMain = getMainInterests()
-  console.log(interestsMain)
+  const getInterests = async () => {
+    const interestsMain = await getMainInterests();
+    setInterestInfo({ main: interestsMain, detail: [] });
+  };
+
+  useEffect(() => {
+    getInterests(); //결과값 형태  {id: 1, name: '프로그래밍'}[] : value_english없어도 괜찮은지? (백엔드)
+  }, []);
+
+  const mainCategories = interestInfo.main?.map(({ name, id }) => (
+    <InterestButton key={id} selected={selectedInfo.selectedMainIdx === id} onClick={handleInterestMainBtnClick(id)}>
+      {name}
+    </InterestButton>
+  ));
+
   const mainCategoryBtns = useMemo(
     () =>
       intersetData.map(({ value, id }) => (
@@ -103,6 +123,7 @@ const RegisterInterest = () => {
 
   const subCategoryBtns = useMemo(() => {
     const { selectedMainIdx, items } = selectedInfo;
+
     const mainCategoryData = intersetData.find(({ id: mainId }) => mainId === selectedInfo.selectedMainIdx);
 
     if (!mainCategoryData) return [];
@@ -123,7 +144,7 @@ const RegisterInterest = () => {
       <InterestRow>
         <InterestBox>
           <span>ㅇㅇ님의 관심분야를 선택해주세요</span>
-          {mainCategoryBtns.length > 0 && <ButtonBox>{mainCategoryBtns}</ButtonBox>}
+          {interestInfo.main.length > 0 && <ButtonBox>{mainCategories}</ButtonBox>}
           {selectedInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && (
             <>
               <SeparatedLine />
