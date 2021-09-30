@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { RoundButton } from "components/Common/Buttons";
 import { TSelectItem } from "components/User/RegisterInterest/RegisterInterest";
-import { ROUTE } from "util/constants";
+import { ROUTE, TARGET_COUNT } from "util/constants";
 
 interface submitProps {
   searchLogs: string[];
@@ -12,9 +12,10 @@ interface submitProps {
 function LocationSubmit({ searchLogs, interests }: submitProps) {
   const history = useHistory();
   const handleNextPage = () => {
-    if (searchLogs.length !== 2) return;
+    if (searchLogs.length !== TARGET_COUNT) return;
 
     //서버에 post요청보내기
+    //응답코드 200일때,
     history.push(ROUTE.MAIN);
   };
   return (

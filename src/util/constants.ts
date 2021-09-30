@@ -9,3 +9,5 @@ export const ROUTE = {
   OAUTH_LOGIN: "/oauth/kakao/callback",
   OAUTH_LOGOUT: "/oauth/kakao/logout",
 };
+
+export const TARGET_COUNT = 2;
