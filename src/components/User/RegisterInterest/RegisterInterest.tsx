@@ -4,9 +4,8 @@ import { Container } from "@material-ui/core";
 import { useHistory } from "react-router";
 
 import { RoundButton, TargetButton } from "components/Common/Buttons";
-import { intersetData } from "util/mockData";
 import { ROUTE } from "util/constants";
-import { getMainInterests } from "util/dataFetching/userInfo";
+import { getMainInterests, getDetailInterests } from "util/dataFetching/userInfo";
 export type TSelectItem = {
   mainIdx: number;
   subIdx: number;
@@ -26,6 +25,10 @@ interface interestInfo {
   main: mainProp[];
   detail: any;
 }
+interface detailsProp {
+  detailId: number;
+  name: string;
+}
 const INIT_INDEX = -1;
 const MAX_SELECT_NUM = 5;
 
@@ -38,6 +41,11 @@ const RegisterInterest = () => {
     items: [],
   });
 
+  // 관심사 5개 선택한 후 주변 장소 설정 페이지로 이동
+  const handleNextButtonClick = (e: React.MouseEvent | MouseEvent) => {
+    const { isMax, items } = selectedInfo;
+    isMax && history.push({ pathname: ROUTE.USER.LOCATION, state: items });
+  };
   // 대분류 선택
   const handleInterestMainBtnClick = (idx: number) => (e: React.MouseEvent | MouseEvent) =>
     setSelectedInfo((state) => {
@@ -85,20 +93,22 @@ const RegisterInterest = () => {
       };
     });
   };
-
-  // 관심사 5개 선택한 후 주변 장소 설정 페이지로 이동
-  const handleNextButtonClick = (e: React.MouseEvent | MouseEvent) => {
-    const { isMax, items } = selectedInfo;
-    isMax && history.push({ pathname: ROUTE.USER.LOCATION, state: items });
-  };
-
-  const getInterests = async () => {
+  const fetchInterests = async () => {
     const interestsMain = await getMainInterests();
     setInterestInfo({ main: interestsMain, detail: [] });
   };
+  const fetchDetailInterests = async (mainId: number) => {
+    const detailInterests = await getDetailInterests(mainId);
+    setInterestInfo((info) => ({ ...info, detail: detailInterests }));
+  };
 
   useEffect(() => {
-    getInterests(); //결과값 형태  {id: 1, name: '프로그래밍'}[] : value_english없어도 괜찮은지? (백엔드)
+    if (selectedInfo.selectedMainIdx < 0) return;
+    fetchDetailInterests(selectedInfo.selectedMainIdx);
+  }, [selectedInfo.selectedMainIdx]);
+
+  useEffect(() => {
+    fetchInterests();
   }, []);
 
   const mainCategories = interestInfo.main?.map(({ name, id }) => (
@@ -107,37 +117,16 @@ const RegisterInterest = () => {
     </InterestButton>
   ));
 
-  const mainCategoryBtns = useMemo(
-    () =>
-      intersetData.map(({ value, id }) => (
-        <InterestButton
-          key={id}
-          selected={selectedInfo.selectedMainIdx === id}
-          onClick={handleInterestMainBtnClick(id)}
-        >
-          {value}
-        </InterestButton>
-      )),
-    [selectedInfo.selectedMainIdx],
-  );
-
-  const subCategoryBtns = useMemo(() => {
+  const subCategories = interestInfo.detail?.map(({ detailId, name }: detailsProp) => {
     const { selectedMainIdx, items } = selectedInfo;
-
-    const mainCategoryData = intersetData.find(({ id: mainId }) => mainId === selectedInfo.selectedMainIdx);
-
-    if (!mainCategoryData) return [];
-
-    return mainCategoryData.subCategories.map(({ value, id }) => {
-      const selectedSubItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === id);
-      const currColor = selectedSubItem ? "primary" : "default";
-      return (
-        <InterestButton key={id} variant="outlined" color={currColor} onClick={handleInterestSubBtnClick(id)}>
-          {value}
-        </InterestButton>
-      );
-    });
-  }, [selectedInfo]);
+    const selectedSubItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === detailId);
+    const currColor = selectedSubItem ? "primary" : "default";
+    return (
+      <InterestButton key={detailId} variant="outlined" color={currColor} onClick={handleInterestSubBtnClick(detailId)}>
+        {name}
+      </InterestButton>
+    );
+  });
 
   return (
     <RegisterInterestLayout>
@@ -145,10 +134,10 @@ const RegisterInterest = () => {
         <InterestBox>
           <span>ㅇㅇ님의 관심분야를 선택해주세요</span>
           {interestInfo.main.length > 0 && <ButtonBox>{mainCategories}</ButtonBox>}
-          {selectedInfo.selectedMainIdx > INIT_INDEX && subCategoryBtns && (
+          {interestInfo.detail.length > 0 && (
             <>
               <SeparatedLine />
-              <ButtonBox>{subCategoryBtns}</ButtonBox>
+              <ButtonBox>{subCategories}</ButtonBox>
             </>
           )}
         </InterestBox>

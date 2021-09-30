@@ -22,14 +22,13 @@ const API = {
     }`;
   },
   logout() {
-    // GET with <Bearer jwt> into header
     return `${serverURL}/logout/kakao`;
   },
   USERINFO: {
     MAIN_INTERESTS() {
       return `${serverURL}/user/interests`;
     },
-    userInterestsDetail(mainId: number) {
+    DETAIL_INTERESTS(mainId: number) {
       return `${serverURL}/user/interests/${mainId}`;
     },
     LOCATION(locationInput: string) {

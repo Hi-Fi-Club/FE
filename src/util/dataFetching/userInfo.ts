@@ -18,6 +18,25 @@ export const getMainInterests = async () => {
     if (response.status !== 200) throw Error;
     return response.json();
   } catch (err) {
-    console.log(err);
+    console.log(err); //에러처리 제대로하기
+    return [];
+  }
+};
+export const getDetailInterests = async (mainId: number) => {
+  try {
+    const token = localStorage.getItem("jwt");
+    const header = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await fetch(API.USERINFO.DETAIL_INTERESTS(mainId), header);
+    if (response.status !== 200) throw Error;
+    return response.json();
+  } catch (err) {
+    console.log(err); //에러처리 제대로하기
+    return [];
   }
 };
