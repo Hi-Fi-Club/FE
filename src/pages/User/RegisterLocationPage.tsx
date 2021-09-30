@@ -1,10 +1,25 @@
 import { useState } from "react";
 import { Container } from "@material-ui/core";
 import styled from "styled-components";
-import { LocationInput, LocationSearchResult, LocationClickResult } from "components/User/RegisterLocation";
+import {
+  LocationInput,
+  LocationSearchResult,
+  LocationClickResult,
+  LocationSubmit,
+} from "components/User/RegisterLocation";
 import { LocationResult } from "components/User/RegisterLocation/types";
+import { TSelectItem } from "components/User/RegisterInterest/RegisterInterest";
+interface location {
+  pathname: string;
+  state: TSelectItem[];
+  search: string;
+  hash: string;
+  key: string;
+}
 
-const RegisterLocationPage = () => {
+const RegisterLocationPage = (props: any) => {
+  //props타입질문드립니다. console.log(props);
+  const interests = props.location.state;
   const [locationResult, setLocationResult] = useState<LocationResult[]>([]);
   const [searchLogs, setSearchLogs] = useState<string[]>([]);
   const [isSameDong, setSameDong] = useState<boolean>(false);
@@ -20,6 +35,7 @@ const RegisterLocationPage = () => {
         <LocationInput setLocationResult={setLocationResult} />
         <LocationSearchResult {...{ locationResult, setLocationResult, searchLogs, setSearchLogs, setSameDong }} />
         <LocationClickResult {...{ isSameDong, searchLogs, setSearchLogs }} />
+        <LocationSubmit searchLogs={searchLogs} interests={interests} />
       </LocationRow>
     </RegisterLocationLayout>
   );
