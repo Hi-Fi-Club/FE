@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-// user - RegisterInterest
+// user - RegisterInterest (컴포넌트 관련)
 type TSelectItem = {
   mainIdx: number;
   subIdx: number;
@@ -17,4 +17,19 @@ type TInterestSelectProps = {
   setSelectedInfo: Dispatch<SetStateAction<TSelectedInfo>>;
 };
 
-export type { TSelectedInfo, TInterestSelectProps };
+// user - RegisterInterest (API 요청 관련)
+type TInterestMainProps = {
+  id: number;
+  name: string;
+};
+type TInterestInfo = {
+  main: TInterestMainProps[];
+  detail: any;
+};
+
+type TInterestDetailProp = {
+  detailId: number;
+  name: string;
+};
+
+export type { TSelectItem, TSelectedInfo, TInterestSelectProps, TInterestInfo, TInterestDetailProp  };

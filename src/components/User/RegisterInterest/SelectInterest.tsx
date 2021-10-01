@@ -1,16 +1,33 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 
 import * as S from "./style";
 
-import { intersetData } from "util/mockData";
-import { USER } from "util/constants";
-import { TInterestSelectProps } from "@/util/types";
-
-const {
-  RegisterInterest: { MAX_SELECT_NUM, INIT_INDEX },
-} = USER;
+import { getMainInterests, getDetailInterests } from "util/dataFetching/userInfo";
+import { MAX_SELECT_NUM, INIT_INDEX } from "util/constants";
+import { TInterestDetailProp, TInterestInfo, TInterestSelectProps } from "@/util/types";
 
 const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSelectProps) => {
+  const [interestInfo, setInterestInfo] = useState<TInterestInfo>({ main: [], detail: [] });
+
+  // 데이터 요청
+  const fetchInterests = async () => {
+    const interestsMain = await getMainInterests();
+    setInterestInfo({ main: interestsMain, detail: [] });
+  };
+  const fetchDetailInterests = async (mainId: number) => {
+    const detailInterests = await getDetailInterests(mainId);
+    setInterestInfo((info) => ({ ...info, detail: detailInterests }));
+  };
+
+  useEffect(() => {
+    if (selectedInfo.selectedMainIdx < 0) return;
+    fetchDetailInterests(selectedInfo.selectedMainIdx);
+  }, [selectedInfo.selectedMainIdx]);
+
+  useEffect(() => {
+    fetchInterests();
+  }, []);
+
   // 대분류 선택
   const handleInterestMainBtnClick = useCallback(
     (idx: number) => (e: React.MouseEvent | MouseEvent) =>
@@ -27,16 +44,16 @@ const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSe
   // 대분류 아이템
   const mainCategoryBtns = useMemo(
     () =>
-      intersetData.map(({ value, id }) => (
+      interestInfo.main?.map(({ name, id }) => (
         <S.InterestButton
           key={id}
           selected={selectedInfo.selectedMainIdx === id}
           onClick={handleInterestMainBtnClick(id)}
         >
-          {value}
+          {name}
         </S.InterestButton>
       )),
-    [selectedInfo.selectedMainIdx, handleInterestMainBtnClick],
+    [interestInfo.main, handleInterestMainBtnClick, selectedInfo.selectedMainIdx],
   );
 
   // 소분류 선택 (관심사 추가)
@@ -67,21 +84,23 @@ const InterestSelect = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSe
 
   // 소분류 아이템
   const subCategoryBtns = useMemo(() => {
-    const { selectedMainIdx, items } = selectedInfo;
-    const mainCategoryData = intersetData.find(({ id: mainId }) => mainId === selectedInfo.selectedMainIdx);
-
-    if (!mainCategoryData) return [];
-
-    return mainCategoryData.subCategories.map(({ value, id }) => {
-      const selectedSubItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === id);
+    if (!interestInfo.detail || interestInfo.detail <= 0) return;
+    return interestInfo.detail?.map(({ detailId, name }: TInterestDetailProp) => {
+      const { selectedMainIdx, items } = selectedInfo;
+      const selectedSubItem = items.find(({ mainIdx, subIdx }) => mainIdx === selectedMainIdx && subIdx === detailId);
       const currColor = selectedSubItem ? "primary" : "default";
       return (
-        <S.InterestButton key={id} variant="outlined" color={currColor} onClick={handleInterestSubBtnClick(id)}>
-          {value}
+        <S.InterestButton
+          key={detailId}
+          variant="outlined"
+          color={currColor}
+          onClick={handleInterestSubBtnClick(detailId)}
+        >
+          {name}
         </S.InterestButton>
       );
     });
-  }, [selectedInfo, handleInterestSubBtnClick]);
+  }, [handleInterestSubBtnClick, interestInfo.detail, selectedInfo]);
 
   return (
     <S.InterestBox {...props}>
