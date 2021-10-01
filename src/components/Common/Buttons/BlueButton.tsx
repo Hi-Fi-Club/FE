@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-import { TChildren } from "util/types";
+import { TChildren } from "@/util/types";
 
-interface button {
+type TBlueButton = {
   children?: TChildren;
-}
+};
 
-const BlueButton = ({ children, ...props }: button) => {
+const BlueButton = ({ children, ...props }: TBlueButton) => {
   return <ButtonLayout {...props}>{children}</ButtonLayout>;
 };
 
