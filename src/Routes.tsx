@@ -4,6 +4,7 @@ import Header from "components/Header";
 import { ROUTE } from "util/constants";
 import LoginLoadingPage from "pages/auth/LoginLoadingPage";
 import LogoutLoadingPage from "pages/auth/LogoutLoadingPage";
+
 const Routes = () => {
   const { ENTER, LOGIN, MAIN, USER, OAUTH_LOGIN, OAUTH_LOGOUT } = ROUTE;
 

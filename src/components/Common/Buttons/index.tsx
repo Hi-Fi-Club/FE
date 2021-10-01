@@ -1,5 +1,7 @@
 import BlueButton from "./BlueButton";
-import RoundButton from "./RoundButton";
+import RoundButton, { TRoundButton } from "./RoundButton";
+import RegisterButton, { TRegisterButton } from "./RegisterButton";
 import TargetButton from "./TargetButton";
 
-export { BlueButton, RoundButton, TargetButton };
+export { BlueButton, RoundButton, TargetButton, RegisterButton };
+export type { TRoundButton, TRegisterButton };

@@ -2,19 +2,21 @@ import { TChildren } from "@/util/types";
 import { Button, PropTypes } from "@material-ui/core";
 import styled from "styled-components";
 
-interface IRoundButton {
+type TRoundButton = {
   variant?: "text" | "outlined" | "contained";
-  color?: PropTypes.Color,
+  color?: PropTypes.Color;
   disableRipple?: boolean;
+  className?: string;
   onClick?: (e: React.MouseEvent | MouseEvent) => void;
   children?: TChildren;
-}
+};
 
-const RoundButton = ({ variant, color, disableRipple, onClick, children, ...props }: IRoundButton) => (
+const RoundButton = ({ variant, color, disableRipple, className, onClick, children, ...props }: TRoundButton) => (
   <RoundButtonLayout
     variant={variant || "contained"}
     color={color || "default"}
     disableRipple={disableRipple}
+    className={className}
     onClick={onClick}
     {...props}
   >
@@ -23,8 +25,9 @@ const RoundButton = ({ variant, color, disableRipple, onClick, children, ...prop
 );
 
 export default RoundButton;
+export type { TRoundButton };
 
-const RoundButtonLayout = styled(Button)<IRoundButton>`
+const RoundButtonLayout = styled(Button)<TRoundButton>`
   padding: 5px 20px;
   border-radius: 24px;
   text-transform: none;

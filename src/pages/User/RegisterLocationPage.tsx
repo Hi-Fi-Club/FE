@@ -8,7 +8,7 @@ import {
   LocationSubmit,
 } from "components/User/RegisterLocation";
 import { LocationResult } from "components/User/RegisterLocation/types";
-import { TSelectItem } from "components/User/RegisterInterest/RegisterInterest";
+import { TSelectItem } from "util/types/user";
 interface location {
   pathname: string;
   state: TSelectItem[];
