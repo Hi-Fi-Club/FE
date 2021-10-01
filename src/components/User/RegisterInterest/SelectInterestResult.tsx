@@ -3,11 +3,7 @@ import { ROUTE } from "@/util/constants";
 
 import { TInterestSelectProps } from "@/util/types";
 import * as S from "./style";
-import { USER } from "util/constants";
-
-const {
-  RegisterInterest: { MAX_SELECT_NUM },
-} = USER;
+import { MAX_SELECT_NUM } from "util/constants";
 
 const InterestSelectResult = ({ selectedInfo, setSelectedInfo, ...props }: TInterestSelectProps) => {
   const history = useHistory();
@@ -29,8 +25,8 @@ const InterestSelectResult = ({ selectedInfo, setSelectedInfo, ...props }: TInte
 
   // 관심사 5개 선택한 후 주변 장소 설정 페이지로 이동
   const handleNextButtonClick = (e: React.MouseEvent | MouseEvent) => {
-    const { isMax } = selectedInfo;
-    isMax && history.push(ROUTE.USER.LOCATION);
+    const { isMax, items } = selectedInfo;
+    isMax && history.push({ pathname: ROUTE.USER.LOCATION, state: items });
   };
 
   return (

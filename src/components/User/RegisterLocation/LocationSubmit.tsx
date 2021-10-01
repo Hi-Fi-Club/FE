@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { RoundButton } from "components/Common/Buttons";
-import { TSelectItem } from "components/User/RegisterInterest/RegisterInterest";
+import { TSelectItem } from "@/util/types";
 import { ROUTE, TARGET_COUNT } from "util/constants";
 
 interface submitProps {
