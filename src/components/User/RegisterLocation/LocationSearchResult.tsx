@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
-import { LocationResult, getLocationName } from "../RegisterLocation";
+import { getLocationName } from "../RegisterLocation";
+import { LocationResult } from "./types";
 interface locationResultProps {
   locationResult: LocationResult[];
   setLocationResult: Dispatch<SetStateAction<LocationResult[]>>;

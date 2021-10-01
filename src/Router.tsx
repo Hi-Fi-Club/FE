@@ -1,11 +1,9 @@
-import { useMemo } from "react";
 import { EnterPage, LoginPage, MainPage, RegisterInterestPage, RegisterLocationPage } from "@/pages";
-import { Route, Redirect, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Header from "components/Header";
 import { ROUTE } from "util/constants";
-import LoginLoadingPage from "pages/loginLogout/LoginLoadingPage";
-import LogoutLoadingPage from "pages/loginLogout/LogoutLoadingPage";
-import { isLogin } from "util/funcs";
+import LoginLoadingPage from "pages/auth/LoginLoadingPage";
+import LogoutLoadingPage from "pages/auth/LogoutLoadingPage";
 const Routes = () => {
   const { ENTER, LOGIN, MAIN, USER, OAUTH_LOGIN, OAUTH_LOGOUT } = ROUTE;
 
