@@ -40,3 +40,22 @@ export const getDetailInterests = async (mainId: number) => {
     return [];
   }
 };
+
+export const postUserInterests = async () => {
+  try {
+    const token = localStorage.getItem("jwt");
+    const header = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await fetch(API.USERINFO.SUBMIT(), header);
+    if (response.status !== 200) throw Error;
+    return response.json(); //응답형태 백엔드와 정하기
+  } catch (err) {
+    console.log(err); //에러처리 제대로하기
+    return [];
+  }
+};
